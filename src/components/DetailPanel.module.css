@@ -1,0 +1,554 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 0;
+  position: relative;
+  background: var(--bg-panel);
+  min-height: 100%;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.12s, border-color 0.12s, background 0.12s;
+  z-index: 2;
+}
+
+.closeBtn:hover {
+  color: var(--text-primary);
+  border-color: #2a2a38;
+  background: var(--bg-hover);
+}
+
+.closeBtn:focus-visible {
+  outline: 2px solid var(--accent-iris);
+  outline-offset: 2px;
+}
+
+/* Header */
+.header {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-right: 36px;
+}
+
+.headline {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.35;
+  margin: 0 0 4px;
+  display: block;
+}
+
+.meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+  display: block;
+}
+
+.scoreBlock {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  min-width: 76px;
+}
+
+.scoreNum {
+  font-size: 30px;
+  font-weight: 800;
+  display: block;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.scoreTier {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-top: 3px;
+}
+
+.scoreRank {
+  font-size: 10px;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.badges {
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.gemBadge {
+  display: inline-block;
+  padding: 3px 8px;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 100px;
+}
+
+.gemBadgeText {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent-yellow);
+}
+
+.availBadge {
+  display: inline-block;
+  padding: 3px 8px;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.18);
+  border-radius: 100px;
+}
+
+.availBadgeText {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--tier-strong);
+}
+
+/* Sections */
+.section {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.sectionLabel {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.sectionLabel::before {
+  content: '';
+  display: block;
+  width: 2px;
+  height: 10px;
+  background: var(--accent-iris);
+  border-radius: 1px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* Dimension grid */
+.dimGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dimRow {
+  display: grid;
+  grid-template-columns: 100px 36px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.dimName {
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.dimScore {
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.dimBar {
+  height: 5px;
+  background: var(--bg-elevated);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.dimBarFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* Profile grid */
+.profileGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.profileItem {
+  background: rgba(255, 255, 255, 0.022);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 11px;
+}
+
+.profileKey {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 3px;
+}
+
+.profileVal {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  display: block;
+}
+
+/* Reasoning */
+.reasonItem {
+  position: relative;
+}
+
+.reasonDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-iris);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.reasonText {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.sectionContainer {
+  margin-top: 4px;
+}
+
+/* ── AI Recommendation Banner ───────────────────────────────────────────── */
+
+.recBanner {
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.recLabel {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  display: block;
+}
+
+.recSub {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ── Confidence + Ramp-up row ────────────────────────────────────────────── */
+
+.metaRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 0 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.confBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.confLabelRow {
+  margin-bottom: 0;
+}
+
+.confLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.confValue {
+  font-size: 12px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.confBarTrack {
+  height: 4px;
+  background: var(--bg-elevated);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.confBarFill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.rampupBlock {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.rampupLabel {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 3px;
+  white-space: nowrap;
+}
+
+.rampupValue {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: block;
+  white-space: nowrap;
+}
+
+/* ── Executive Summary ───────────────────────────────────────────────────── */
+
+.summaryText {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  display: block;
+}
+
+/* ── Top Strengths ───────────────────────────────────────────────────────── */
+
+.strengthsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.strengthCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+.strengthHeader {
+  margin-bottom: 5px;
+}
+
+.strengthName {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.strengthScore {
+  font-size: 13px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.strengthBarTrack {
+  height: 3px;
+  background: var(--bg-elevated);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.strengthBarFill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.strengthDetail {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  display: block;
+}
+
+/* ── Potential Risks ─────────────────────────────────────────────────────── */
+
+.risksList {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.riskItem {
+  align-items: start;
+}
+
+.riskDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.riskText {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  display: block;
+}
+
+.riskSeverity {
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+/* ── Interview Focus ─────────────────────────────────────────────────────── */
+
+.focusList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.focusItem {
+  align-items: start;
+}
+
+.focusNum {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--accent-iris);
+  opacity: 0.7;
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-variant-numeric: tabular-nums;
+  width: 14px;
+}
+
+.focusTopic {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+.focusReason {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  display: block;
+  line-height: 1.4;
+}
+
+/* ── Hiring Recommendation ───────────────────────────────────────────────── */
+
+.hiringRec {
+  border: 1px solid;
+  border-radius: 7px;
+  padding: 10px 12px;
+}
+
+.hiringRecText {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  display: block;
+}
+
+/* ── Legacy (RecruitabilityPanel internal) ───────────────────────────────── */
+.sectionHeader {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+  display: block;
+}
+
+.loadingState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.errorState {
+  padding: 16px;
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 6px;
+}
+
+.errorTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-red);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.errorMessage {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: block;
+}

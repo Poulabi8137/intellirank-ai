@@ -1,0 +1,92 @@
+.chartContainer {
+  padding: 16px;
+  background: var(--bg-sidebar);
+  border-bottom: 1px solid var(--border);
+}
+
+.chartTitle {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.emptyText {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 20px 0;
+  display: block;
+}
+
+.chartWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Histogram bars container — fixed height, bars grow from bottom */
+.barsContainer {
+  height: 84px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.barWrapper {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  transition: opacity 0.2s;
+}
+
+.barWrapper.filteredOut {
+  opacity: 0.2;
+}
+
+.barWrapper.activeBar .barFill {
+  filter: brightness(1.25);
+  box-shadow: 0 0 0 1px currentColor;
+}
+
+.barFill {
+  width: 100%;
+  border-radius: 2px 2px 0 0;
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+
+.barFill:hover {
+  filter: brightness(1.15);
+}
+
+.barFill:focus-visible {
+  outline: 2px solid var(--accent-iris);
+  outline-offset: 2px;
+}
+
+/* Tier colors — visible on dark background */
+.barFill.strong { background: var(--tier-strong); }
+.barFill.good   { background: var(--tier-good); }
+.barFill.possible { background: var(--tier-possible); }
+.barFill.weak   { background: var(--tier-weak); }
+
+/* X-axis ticks */
+.ticksRow {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}
+
+.tickLabel {
+  flex: 1;
+  font-size: 8px;
+  color: var(--text-muted);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}

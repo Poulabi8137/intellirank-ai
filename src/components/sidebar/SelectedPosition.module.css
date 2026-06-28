@@ -1,0 +1,44 @@
+.positionContainer {
+  padding: 16px;
+  background: rgba(124, 93, 247, 0.025);
+  border-top: 1px solid rgba(124, 93, 247, 0.18);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+  pointer-events: none;
+}
+
+.positionContainer.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.sectionHeader {
+  font-size: 9px;
+  color: rgba(124, 93, 247, 0.7);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.metricItem {
+  text-align: center;
+}
+
+.metricLabel {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.metricValue {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}

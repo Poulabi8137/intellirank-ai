@@ -1,0 +1,210 @@
+/* Dark-theme shimmer skeleton */
+.skeleton {
+  background: linear-gradient(90deg, #1a1a24 25%, #222230 50%, #1a1a24 75%);
+  background-size: 200% 100%;
+  animation: skeletonLoading 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes skeletonLoading {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeletonBase {
+  background: #1a1a24;
+  border-radius: 4px;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #111118 0%, #1e1e2c 40%, #252534 50%, #1e1e2c 60%, #111118 100%);
+  background-size: 200% 100%;
+  animation: shimmerAnim 1.8s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmerAnim {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeletonProgress {
+  height: 4px;
+  background: #1a1a24;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+/* Text skeleton */
+.skeletonTextContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeletonText {
+  height: 10px;
+  background: linear-gradient(90deg, #111118 0%, #1e1e2c 40%, #1e1e2c 60%, #111118 100%);
+  background-size: 200% 100%;
+  animation: shimmerAnim 1.8s infinite;
+  border-radius: 3px;
+}
+
+.skeletonCard {
+  background: #111118;
+  border-radius: 6px;
+}
+
+/* Dashboard skeleton */
+.dashboardSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  height: 100%;
+}
+
+.dashboardHeader {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.dashboardStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.dashboardStatCard {
+  padding: 12px;
+  background: #111118;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboardStatLabel { }
+
+.dashboardGrid {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+}
+
+.dashboardMain {
+  flex: 1;
+}
+
+.dashboardTable {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dashboardTableHeader {
+  height: 36px;
+  background: #111118;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.dashboardTableRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 16px;
+  background: #0f0f18;
+  border-radius: 4px;
+}
+
+.dashboardSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 200px;
+}
+
+.mt16 { }
+
+/* Loading state */
+.loadingState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.loadingText {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.errorState {
+  padding: 20px;
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: 6px;
+}
+
+.errorTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-red);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.errorMessage {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Candidate details skeleton */
+.candidateDetailsSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+.candidateHeader {
+  display: flex;
+  gap: 12px;
+}
+
+.candidateProfile { display: flex; flex-direction: column; gap: 8px; }
+.candidateTabs    { display: flex; flex-direction: column; gap: 8px; }
+.tabPanel         { display: flex; flex-direction: column; gap: 6px; }
+.tabHeader        { height: 24px; }
+.tabContent       { display: flex; flex-direction: column; gap: 6px; }
+
+/* Comparison skeleton */
+.comparisonSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+.comparisonHeader   { display: flex; gap: 12px; }
+.comparisonControls { display: flex; flex-direction: column; gap: 8px; }
+.comparisonTable    { display: flex; flex-direction: column; gap: 4px; }
+.tableHeader        { height: 32px; border-radius: 4px; }
+.tableRow           { display: flex; gap: 12px; }
+
+/* Hidden gems skeleton */
+.hiddenGemsSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+.hiddenGemsHeader { display: flex; gap: 12px; }
+.filtersSection   { display: flex; flex-direction: column; gap: 8px; }
+.cardsGrid        { display: flex; flex-direction: column; gap: 8px; }
+.cardSkeleton     { }

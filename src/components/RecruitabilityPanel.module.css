@@ -1,0 +1,755 @@
+/*
+ * Recruitability Panel - Phase 7 CSS Styles
+ * 
+ * This file contains all CSS styling for the RecruitabilityPanel component,
+ * providing a comprehensive view of candidate recruitability assessment.
+ * 
+ * The styling follows the exact layout specification from
+ * FRONTEND_UX_SPEC.md and includes:
+ * - Multi-section panel design with clear visual hierarchy
+ * - Severity badges, status badges, and risk colors
+ * - Expandable sections with smooth transitions
+ * - Table layout with sortable columns
+ * - Progress bars and confidence indicators
+ * - Professional, modern aesthetics matching the brand
+ */
+
+/*
+ * Main container - the Recruitability Panel slide-in section
+ * Fixed positioning ensures it stays in place while content scrolls
+ */
+.container {
+  /* Background and border for separation from other panels */
+  padding: 24px;
+  background: var(--bg-page);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  /* Ensures consistent spacing within the container */
+  margin-bottom: 24px;
+}
+
+/* Header section with title and score */
+.header {
+  /* Bottom margin creates separation from content */
+  margin-bottom: 24px;
+}
+
+.headerTop {
+  align-items: center;
+}
+
+.headerTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  /* Above the separator line */
+  z-index: 1;
+}
+
+.subheader {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  display: block;
+}
+
+.scoreBadge {
+  background: rgba(25, 118, 210, 0.1);
+  border: 1px solid rgba(25, 118, 210, 0.3);
+  border-radius: 6px;
+  padding: 8px 16px;
+  text-align: center;
+}
+
+.scoreNumber {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent-blue);
+  display: block;
+}
+
+.scoreScale {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: block;
+}
+
+/* Section separator and title styling */
+.sectionContainer {
+  margin-bottom: 32px;
+}
+
+.sectionTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+/* Score grid layout for Recruitability Score section */
+.scoreGrid {
+  margin-bottom: 8px;
+}
+
+.scoreCard {
+  padding: 16px;
+  background: var(--bg-row);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  text-align: center;
+  min-height: 100px;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.scoreLabel {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.scoreValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.scoreDescription {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Status and severity badge styling */
+.statusBadge {
+  border-radius: 4px;
+  padding: 4px 8px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.statusBadgeText {
+  font-size: 11px;
+  font-weight: 600;
+  display: block;
+}
+
+.excellentStatus {
+  background: rgba(43, 138, 62, 0.1);
+  border: 1px solid rgba(43, 138, 62, 0.3);
+}
+
+.excellentStatus .statusBadgeText {
+  color: #2b8a3e;
+}
+
+.goodStatus {
+  background: rgba(25, 118, 210, 0.1);
+  border: 1px solid rgba(25, 118, 210, 0.3);
+}
+
+.goodStatus .statusBadgeText {
+  color: #1971c2;
+}
+
+.moderateStatus {
+  background: rgba(235, 160, 12, 0.1);
+  border: 1px solid rgba(235, 160, 12, 0.3);
+}
+
+.moderateStatus .statusBadgeText {
+  color: #e67e22;
+}
+
+.highRiskStatus {
+  background: rgba(201, 42, 42, 0.1);
+  border: 1px solid rgba(201, 42, 42, 0.3);
+}
+
+.highRiskStatus .statusBadgeText {
+  color: #c92a2a;
+}
+
+.severityBadge {
+  border-radius: 4px;
+  padding: 4px 8px;
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.severityBadgeText {
+  font-size: 11px;
+  font-weight: 600;
+  display: block;
+}
+
+.highSeverity {
+  background: rgba(201, 42, 42, 0.1);
+  border: 1px solid rgba(201, 42, 42, 0.3);
+}
+
+.highSeverity .severityBadgeText {
+  color: #c92a2a;
+}
+
+.mediumSeverity {
+  background: rgba(235, 160, 12, 0.1);
+  border: 1px solid rgba(235, 160, 12, 0.3);
+}
+
+.mediumSeverity .severityBadgeText {
+  color: #e67e22;
+}
+
+.lowSeverity {
+  background: rgba(43, 138, 62, 0.1);
+  border: 1px solid rgba(43, 138, 62, 0.3);
+}
+
+.lowSeverity .severityBadgeText {
+  color: #2b8a3e;
+}
+
+.impactBadge {
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-right: 8px;
+}
+
+.impactBadgeText {
+  font-size: 11px;
+  font-weight: 600;
+  display: block;
+}
+
+.blockImpact {
+  background: rgba(201, 42, 42, 0.1);
+  border: 1px solid rgba(201, 42, 42, 0.3);
+}
+
+.blockImpact .impactBadgeText {
+  color: #c92a2a;
+}
+
+.delayImpact {
+  background: rgba(235, 160, 12, 0.1);
+  border: 1px solid rgba(235, 160, 12, 0.3);
+}
+
+.delayImpact .impactBadgeText {
+  color: #e67e22;
+}
+
+.costImpact {
+  background: rgba(25, 118, 210, 0.1);
+  border: 1px solid rgba(25, 118, 210, 0.3);
+}
+
+.costImpact .impactBadgeText {
+  color: #1971c2;
+}
+
+.neutralImpact {
+  background: rgba(134, 142, 150, 0.1);
+  border: 1px solid rgba(134, 142, 150, 0.3);
+}
+
+.neutralImpact .impactBadgeText {
+  color: #495057;
+}
+
+/* Blockers list styling */
+.blockersList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.blockerCard {
+  padding: 16px;
+  background: var(--bg-page);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.blockerCard:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent-blue);
+}
+
+.blockerHeader {
+  margin-bottom: 8px;
+}
+
+.blockerExplanation {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.blockerDetails {
+  padding: 12px;
+  background: rgba(25, 118, 210, 0.05);
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.detailsTitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.detailsContent {
+  font-size: 12px;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.warningText {
+  font-size: 11px;
+  color: var(--accent-red);
+  font-weight: 600;
+  margin-top: 8px;
+  display: block;
+}
+
+.expandIcon {
+  font-size: 14px;
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+}
+
+.expandIcon.expanded {
+  transform: rotate(180deg);
+}
+
+.noBlockersText {
+  font-size: 14px;
+  color: #2b8a3e;
+  font-weight: 600;
+  text-align: center;
+  padding: 24px;
+  background: rgba(43, 138, 62, 0.05);
+  border-radius: 6px;
+  border: 1px dashed #2b8a3e;
+}
+
+/* Positive signals grid styling */
+.signalsGrid {
+  margin-bottom: 8px;
+}
+
+.signalCard {
+  padding: 16px;
+  background: var(--bg-page);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.signalName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.impactSignalBadge {
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.impactSignalBadgeText {
+  font-size: 11px;
+  font-weight: 600;
+  display: block;
+}
+
+.positiveImpact {
+  background: rgba(43, 138, 62, 0.1);
+  border: 1px solid rgba(43, 138, 62, 0.3);
+}
+
+.positiveImpact .impactSignalBadgeText {
+  color: #2b8a3e;
+}
+
+.highImpact {
+  background: rgba(25, 118, 210, 0.1);
+  border: 1px solid rgba(25, 118, 210, 0.3);
+}
+
+.highImpact .impactSignalBadgeText {
+  color: #1971c2;
+}
+
+.confidenceContainer {
+  margin-bottom: 8px;
+}
+
+.confidenceLabel {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-right: 8px;
+}
+
+.confidenceBadge {
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.confidenceBadgeText {
+  font-size: 11px;
+  font-weight: 600;
+  display: block;
+}
+
+.highConfidence {
+  background: rgba(43, 138, 62, 0.1);
+  border: 1px solid rgba(43, 138, 62, 0.3);
+}
+
+.highConfidence .confidenceBadgeText {
+  color: #2b8a3e;
+}
+
+.mediumConfidence {
+  background: rgba(235, 160, 12, 0.1);
+  border: 1px solid rgba(235, 160, 12, 0.3);
+}
+
+.mediumConfidence .confidenceBadgeText {
+  color: #e67e22;
+}
+
+.lowConfidence {
+  background: rgba(201, 42, 42, 0.1);
+  border: 1px solid rgba(201, 42, 42, 0.3);
+}
+
+.lowConfidence .confidenceBadgeText {
+  color: #c92a2a;
+}
+
+.smallProgressBar {
+  height: 4px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* Progress bar colors for RecruitabilityPanel */
+.progressExcellent { background-color: #2b8a3e; }
+.progressGood { background-color: #1971c2; }
+.progressModerate { background-color: #e67e22; }
+.progressPoor { background-color: #c92a2a; }
+
+/* Recruitability Signals Table styling */
+.sortControls {
+  margin-bottom: 16px;
+}
+
+.sortLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-right: 12px;
+}
+
+.sortButton {
+  margin-right: 8px;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 11px;
+}
+
+.sortButton.activeSort {
+  background: rgba(25, 118, 210, 0.1);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+.tableContainer {
+  background: var(--bg-page);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.tableHeader {
+  padding: 12px 16px;
+  background: var(--bg-row);
+  border-bottom: 1px solid var(--border);
+}
+
+.tableColumn {
+  padding: 0 16px;
+}
+
+.signalColumn {
+  flex: 2;
+}
+
+.weightColumn {
+  flex: 1;
+}
+
+.valueColumn {
+  flex: 1;
+}
+
+.contributionColumn {
+  flex: 1.5;
+}
+
+.tableHeaderText {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tableRow {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background: var(--bg-hover);
+}
+
+.tableCellText {
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.contributionBarContainer {
+  width: 100%;
+  height: 20px;
+  background: var(--bar-bg);
+  border-radius: 10px;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+
+.contributionBar {
+  height: 100%;
+  background: var(--bar-fill);
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.contributionValue {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* Timeline risks styling */
+.timelineContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timelineCard {
+  padding: 16px;
+  background: var(--bg-page);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.timelineCard:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent-blue);
+}
+
+.timelineHeader {
+  margin-bottom: 8px;
+}
+
+.timelineType {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: 8px;
+}
+
+.riskBadge {
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.riskBadgeText {
+  font-size: 11px;
+  font-weight: 600;
+  display: block;
+}
+
+.highRiskColor {
+  background: rgba(201, 42, 42, 0.1);
+  border: 1px solid rgba(201, 42, 42, 0.3);
+}
+
+.highRiskColor .riskBadgeText {
+  color: #c92a2a;
+}
+
+.mediumRiskColor {
+  background: rgba(235, 160, 12, 0.1);
+  border: 1px solid rgba(235, 160, 12, 0.3);
+}
+
+.mediumRiskColor .riskBadgeText {
+  color: #e67e22;
+}
+
+.lowRiskColor {
+  background: rgba(43, 138, 62, 0.1);
+  border: 1px solid rgba(43, 138, 62, 0.3);
+}
+
+.lowRiskColor .riskBadgeText {
+  color: #2b8a3e;
+}
+
+.timelineValue {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  display: block;
+}
+
+.timelineDetails {
+  padding: 12px;
+  background: rgba(201, 42, 42, 0.05);
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.noTimelineRisksText {
+  font-size: 14px;
+  color: #2b8a3e;
+  font-weight: 600;
+  text-align: center;
+  padding: 24px;
+  background: rgba(43, 138, 62, 0.05);
+  border-radius: 6px;
+  border: 1px dashed #2b8a3e;
+}
+
+/* Recommendation styling */
+.recommendationContainer {
+  padding: 20px;
+  background: rgba(43, 138, 62, 0.05);
+  border-radius: 6px;
+  border-left: 4px solid #2b8a3e;
+}
+
+.recommendationText {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Loading and error states */
+.loadingState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: var(--bg-page);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.loadingText {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.errorState {
+  padding: 20px;
+  background: rgba(201, 42, 42, 0.04);
+  border: 1px solid rgba(201, 42, 42, 0.2);
+  border-radius: 8px;
+}
+
+.errorTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent-red);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.errorMessage {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.noDataText {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  padding: 40px;
+  background: var(--bg-page);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+/* Risk indicators for timeline */
+.highRiskColor {
+  background: rgba(201, 42, 42, 0.1);
+  border: 1px solid rgba(201, 42, 42, 0.3);
+}
+
+.highRiskColor .riskBadgeText {
+  color: #c92a2a;
+}
+
+.mediumRiskColor {
+  background: rgba(235, 160, 12, 0.1);
+  border: 1px solid rgba(235, 160, 12, 0.3);
+}
+
+.mediumRiskColor .riskBadgeText {
+  color: #e67e22;
+}
+
+.lowRiskColor {
+  background: rgba(43, 138, 62, 0.1);
+  border: 1px solid rgba(43, 138, 62, 0.3);
+}
+
+.lowRiskColor .riskBadgeText {
+  color: #2b8a3e;
+}

@@ -1,0 +1,134 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  /* ── Backgrounds ─────────────────────────────── */
+  --bg-page:        #06060a;
+  --bg-app:         #080810;
+  --bg-surface:     #0c0c14;
+  --bg-sidebar:     #0a0a12;
+  --bg-panel:       #0d0d16;
+  --bg-row:         #0c0c14;
+  --bg-row-hover:   #10101a;
+  --bg-row-selected:#14112a;
+  --bg-elevated:    #111120;
+  --bg-overlay:     rgba(6, 6, 10, 0.85);
+  --bg-hover:       rgba(255, 255, 255, 0.035);
+  --bg-active:      rgba(124, 93, 247, 0.08);
+
+  /* ── Borders ─────────────────────────────────── */
+  --border:         #18182a;
+  --border-subtle:  #111118;
+  --border-medium:  #22223a;
+  --border-accent:  rgba(124, 93, 247, 0.3);
+  --border-strong:  #2e2e48;
+
+  /* ── Text ────────────────────────────────────── */
+  --text-primary:   #ededf7;
+  --text-secondary: #8888aa;
+  --text-tertiary:  #5a5a7a;
+  --text-muted:     #44445e;
+  --text-disabled:  #2e2e42;
+
+  /* ── Accent — Iris/Purple ─────────────────────── */
+  --accent-iris:        #7c5df7;
+  --accent-iris-hover:  #8f72f9;
+  --accent-iris-dim:    rgba(124, 93, 247, 0.15);
+  --accent-iris-glow:   rgba(124, 93, 247, 0.25);
+  --accent-purple:      #b39dfd;
+  --accent-purple-dim:  rgba(179, 157, 253, 0.12);
+
+  /* ── Status / Tier Colors ─────────────────────── */
+  --accent-blue:    #4f8ef7;
+  --accent-green:   #22c55e;
+  --accent-yellow:  #f5a623;
+  --accent-red:     #ef4444;
+  --accent-cyan:    #22d3ee;
+
+  --tier-strong:   #22c55e;
+  --tier-good:     #4f8ef7;
+  --tier-possible: #f5a623;
+  --tier-weak:     #6b7280;
+
+  --tier-strong-bg:   rgba(34, 197, 94, 0.1);
+  --tier-good-bg:     rgba(79, 142, 247, 0.1);
+  --tier-possible-bg: rgba(245, 166, 35, 0.1);
+  --tier-weak-bg:     rgba(107, 114, 128, 0.1);
+
+  /* ── Shadows / Elevation ─────────────────────── */
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md:   0 4px 12px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.3);
+  --shadow-lg:   0 8px 24px rgba(0,0,0,0.6), 0 4px 8px rgba(0,0,0,0.4);
+  --shadow-iris: 0 0 0 1px rgba(124,93,247,0.3), 0 0 16px rgba(124,93,247,0.12);
+  --shadow-row:  0 2px 8px rgba(0,0,0,0.35);
+
+  /* ── Typography ──────────────────────────────── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── Radius ──────────────────────────────────── */
+  --radius-xs:  3px;
+  --radius-sm:  5px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-pill: 100px;
+
+  /* ── Transitions ─────────────────────────────── */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+
+  --transition-fast:  0.1s var(--ease-out);
+  --transition-base:  0.18s var(--ease-out);
+  --transition-slow:  0.3s var(--ease-out);
+
+  /* ── Bar track ───────────────────────────────── */
+  --bar-bg: #1c1c2e;
+
+  /* ── Z-index scale ───────────────────────────── */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-overlay: 20;
+  --z-modal:   30;
+  --z-toast:   40;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* ── Scrollbar ─────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #1e1e30; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #2a2a44; }
+
+/* ── Focus ring ────────────────────────────────── */
+button { font-family: inherit; cursor: pointer; }
+*:focus-visible {
+  outline: 2px solid var(--accent-iris);
+  outline-offset: 2px;
+}
+
+/* ── Selection ─────────────────────────────────── */
+::selection {
+  background: rgba(124, 93, 247, 0.25);
+  color: var(--text-primary);
+}

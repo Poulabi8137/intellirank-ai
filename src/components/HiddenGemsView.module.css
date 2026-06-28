@@ -1,0 +1,729 @@
+/*
+ * Hidden Gems View - Phase 9 CSS Styles (Part 1)
+ * 
+ * This file contains the styling for the HiddenGemsView component,
+ * providing a dedicated page for overlooked candidates with strong potential.
+ */
+
+/* Main container for the Hidden Gems view */
+.container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-page);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header section */
+.header {
+  padding: 24px;
+  background: var(--bg-page);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.headerContent {
+  max-width: 100%;
+}
+
+.headerTop {
+  margin-bottom: 16px;
+}
+
+.headerTitle {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.headerSubtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: block;
+}
+
+.headerControls {
+  margin-top: 16px;
+}
+
+.sortControl {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sortLabel {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.sortSelect {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sortSelect:hover {
+  border-color: var(--accent-blue);
+}
+
+.sortSelect:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.sortDirectionControl {
+  display: flex;
+  gap: 4px;
+  margin-left: 12px;
+}
+
+.sortDirectionButton {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sortDirectionButton:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent-blue);
+}
+
+.sortDirectionButton.active {
+  background: rgba(25, 118, 210, 0.1);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+/* Filters section */
+.filtersSection {
+  padding: 20px 24px;
+  background: var(--bg-row);
+  border-bottom: 1px solid var(--border);
+}
+
+.filtersTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.filtersContainer {
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.filterGroup {
+  min-width: 200px;
+}
+
+.filterLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.checkbox {
+  margin-right: 8px;
+  margin-bottom: 4px;
+}
+
+.checkboxLabel {
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+/* Content area with cards */
+.contentArea {
+  flex: 1;
+  padding: 24px;
+  background: var(--bg-page);
+}
+
+.cardsGrid {
+  margin-bottom: 24px;
+}
+
+/* Individual hidden gem card */
+.card {
+  padding: 20px;
+  background: var(--bg-page);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border-color: var(--accent-blue);
+}
+
+.cardExpanded {
+  border-color: var(--accent-green);
+  background: rgba(43, 138, 62, 0.02);
+}
+
+/* Card header with candidate info */
+.cardHeader {
+  margin-bottom: 16px;
+}
+
+.rankBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  background: rgba(25, 118, 210, 0.1);
+  border: 1px solid rgba(25, 118, 210, 0.3);
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-blue);
+  margin-right: 12px;
+}
+
+.candidateName {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: inline-block;
+  margin-right: 12px;
+}
+
+.hiddenGemBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: rgba(235, 160, 12, 0.1);
+  border: 1px solid rgba(235, 160, 12, 0.3);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #e67e22;
+}
+
+.headerMeta {
+  margin-top: 12px;
+}
+
+.metaText {
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: inline-block;
+  margin-right: 16px;
+}
+
+/* Score section */
+.scoreSection {
+  text-align: right;
+}
+
+.overallScore {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-blue);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.scoreLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+}
+
+.expandIcon {
+  font-size: 16px;
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+/* Metrics section */
+.metricsSection {
+  margin-top: auto;
+  margin-bottom: 16px;
+}
+
+.metricBox {
+  padding: 12px;
+  background: var(--bg-row);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.metricBox:hover {
+  background: rgba(25, 118, 210, 0.05);
+  border-color: var(--accent-blue);
+}
+
+.metricLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.metricValue {
+  font-size: 20px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.potentialColor {
+  color: #2b8a3e;
+}
+
+.recruitabilityColor {
+  color: #1971c2;
+}
+
+.confidenceText {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.statusText {
+  font-size: 11px;
+  font-weight: 600;
+  display: block;
+  margin-top: 4px;
+}
+
+/* Expanded content sections */
+.expandedContent {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.sectionContainer {
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* Why Hidden section */
+.reasonsGrid {
+  margin-top: 12px;
+}
+
+.reasonCard {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background: var(--bg-page);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  height: 100%;
+  transition: all 0.2s ease;
+}
+
+.reasonCard:hover {
+  background: rgba(235, 160, 12, 0.05);
+  border-color: rgba(235, 160, 12, 0.3);
+}
+
+.reasonBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: rgba(235, 160, 12, 0.1);
+  border: 1px solid rgba(235, 160, 12, 0.3);
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.reasonBadgeText {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e67e22;
+}
+
+.reasonText {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* Potential section */
+.potentialSection {
+  padding: 20px;
+  background: rgba(43, 138, 62, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(43, 138, 62, 0.1);
+}
+
+.potentialHeader {
+  margin-bottom: 20px;
+}
+
+.potentialScore {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2b8a3e;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.potentialLabel {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.potentialIndicators {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.indicatorItem {
+  flex: 1;
+  min-width: 100px;
+}
+
+.indicatorLabel {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.indicatorBarContainer {
+  width: 100%;
+  height: 8px;
+  background: var(--bar-bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.indicatorBar {
+  height: 100%;
+  background: var(--bar-fill);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.longTermRecommendation {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(43, 138, 62, 0.2);
+}
+
+/* Explainability summary section */
+.summaryGrid {
+  margin-top: 12px;
+}
+
+.summaryCard {
+  padding: 16px;
+  background: var(--bg-page);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  height: 100%;
+  transition: all 0.2s ease;
+}
+
+.summaryCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  border-color: var(--accent-blue);
+}
+
+.summaryTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summaryValue {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Recruitability section */
+.recruitabilitySection {
+  padding: 20px;
+  background: rgba(25, 118, 210, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(25, 118, 210, 0.1);
+}
+
+.blockersContainer, .signalsContainer {
+  margin-bottom: 16px;
+}
+
+.subSectionTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.blockerBadge, .positiveSignalBadge {
+  margin-right: 8px;
+  margin-bottom: 8px;
+  display: inline-flex;
+}
+
+.blockerBadgeText, .positiveSignalBadgeText {
+  font-size: 11px;
+  font-weight: 600;
+  display: block;
+  padding: 4px 10px;
+}
+
+.blockerBadge {
+  background: rgba(201, 42, 42, 0.1);
+  border: 1px solid rgba(201, 42, 42, 0.3);
+  color: #c92a2a;
+}
+
+.positiveSignalBadge {
+  background: rgba(43, 138, 62, 0.1);
+  border: 1px solid rgba(43, 138, 62, 0.3);
+  color: #2b8a3e;
+}
+
+.noBlockersText, .noSignalsText, .noRecruitabilityText {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+  display: block;
+  padding: 12px;
+  background: var(--bg-page);
+  border-radius: 6px;
+  border: 1px dashed var(--border);
+}
+
+.hiringRecommendation {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(25, 118, 210, 0.2);
+}
+
+.recommendationLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: 8px;
+}
+
+.recommendationText {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Action buttons */
+.actionButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-page);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 60px;
+  flex: 1;
+  margin: 0 4px;
+}
+
+.actionButton:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+.actionIcon {
+  font-size: 18px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.actionText {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+}
+
+/* Summary section */
+.summarySection {
+  padding: 24px;
+  background: var(--bg-row);
+  border-top: 1px solid var(--border);
+}
+
+.summarySection .summaryGrid {
+  margin-top: 16px;
+}
+
+.summarySection .summaryCard {
+  text-align: center;
+  padding: 20px;
+}
+
+.summarySection .summaryLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summarySection .summaryValue {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent-blue);
+}
+
+/* Footer */
+.footer {
+  padding: 16px 24px;
+  background: var(--bg-page);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.footerText {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Empty state */
+.emptyState {
+  padding: 48px;
+  text-align: center;
+  background: var(--bg-page);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  margin: 24px auto;
+  max-width: 400px;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.emptyTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.emptyDescription {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Animation */
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: cardFadeIn 0.3s ease-out;
+  animation-fill-mode: both;
+}
+
+/* ARIA and accessibility */
+.card[aria-expanded="true"] {
+  border-left: 4px solid #2b8a3e;
+}
+
+.card:focus-within {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}

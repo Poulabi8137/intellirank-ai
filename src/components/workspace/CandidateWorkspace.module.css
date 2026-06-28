@@ -1,0 +1,79 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background: #08080b;
+  overflow: hidden;
+}
+
+.tabBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px 0 0;
+  border-bottom: 1px solid #1a1a22;
+  background: #0a0a0d;
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.tab {
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+  white-space: nowrap;
+  margin-bottom: -1px;
+}
+
+.tab:hover {
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--accent-iris);
+  outline-offset: -2px;
+}
+
+.tabActive {
+  color: var(--accent-purple);
+  border-bottom-color: var(--accent-iris);
+  font-weight: 600;
+  background: rgba(124, 93, 247, 0.04);
+}
+
+.tabRight {
+  flex: 1;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.demoLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: #f59e0b;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  padding: 2px 7px;
+  border-radius: 100px;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.listArea {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}

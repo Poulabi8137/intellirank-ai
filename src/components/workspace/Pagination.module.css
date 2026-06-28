@@ -1,0 +1,144 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-top: 1px solid #111116;
+  background: #0a0a0d;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.countInfo {
+  min-width: 140px;
+}
+
+.countText {
+  font-size: 12px;
+  color: #666;
+  font-variant-numeric: tabular-nums;
+}
+
+.totalHint {
+  font-size: 11px;
+  color: #444;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.navBtn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #1e1e28;
+  background: transparent;
+  color: #888;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s;
+  font-family: inherit;
+  line-height: 1;
+}
+
+.navBtn:hover:not(:disabled) {
+  border-color: #6e56cf;
+  color: #a395e8;
+  background: rgba(110,86,207,0.1);
+}
+
+.navBtn:focus-visible {
+  outline: 2px solid #6e56cf;
+  outline-offset: 2px;
+}
+
+.navBtnDisabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.pageBtn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s;
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.pageBtn:hover {
+  border-color: #2a2a35;
+  color: #ccc;
+  background: rgba(255,255,255,0.04);
+}
+
+.pageBtn:focus-visible {
+  outline: 2px solid #6e56cf;
+  outline-offset: 2px;
+}
+
+.pageBtnActive {
+  border-color: #6e56cf;
+  color: #c4b5fd;
+  background: rgba(110,86,207,0.12);
+  font-weight: 600;
+}
+
+.pageBtnActive:hover {
+  background: rgba(110,86,207,0.18);
+}
+
+.ellipsis {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-size: 12px;
+}
+
+.pageSizeRow {
+  min-width: 120px;
+  justify-content: flex-end;
+}
+
+.pageSizeLabel {
+  font-size: 11px;
+  color: #555;
+}
+
+.pageSizeSelect {
+  background: #111114;
+  border: 1px solid #222228;
+  border-radius: 6px;
+  color: #aaa;
+  font-size: 12px;
+  padding: 3px 6px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.12s;
+}
+
+.pageSizeSelect:hover {
+  border-color: #33333d;
+}
+
+.pageSizeSelect:focus {
+  outline: 2px solid #6e56cf;
+  outline-offset: 2px;
+}

@@ -1,0 +1,793 @@
+/*
+ * Candidate Comparison View - Phase 8 CSS Styles (Part 1)
+ * 
+ * This file contains the core styling for the ComparisonView component,
+ * providing a comprehensive side-by-side comparison of candidates.
+ */
+
+/* Main container for the comparison view */
+.comparisonContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-page);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header section with controls */
+.comparisonHeader {
+  padding: 20px 24px;
+  background: var(--bg-page);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.headerContent {
+  max-width: 100%;
+}
+
+.headerTop {
+  margin-bottom: 16px;
+}
+
+.headerTitle {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.headerSubtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: block;
+}
+
+.headerControls {
+  margin-top: 16px;
+}
+
+.sortControl {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sortLabel {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.sortSelect {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sortSelect:hover {
+  border-color: var(--accent-blue);
+}
+
+.sortSelect:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.closeButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-page);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+/* Main content area with scrollable sections */
+.comparisonMain {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px;
+  background: var(--bg-page);
+}
+
+/* Section container for each comparison section */
+.sectionContainer {
+  margin-bottom: 32px;
+  background: var(--bg-page);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  animation: slideIn 0.3s ease-out;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 20px 24px;
+  background: var(--bg-row);
+  border-bottom: 1px solid var(--border);
+  display: block;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Table containers for scrollable content */
+.scrollContainer {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+/* Main comparison table layout */
+.tableHeader {
+  display: flex;
+  padding: 16px 24px;
+  background: var(--bg-row);
+  border-bottom: 2px solid var(--border);
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.tableRow {
+  display: flex;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  transition: all 0.2s ease;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.tableRow:hover {
+  background: var(--bg-hover);
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Table columns */
+.tableColumn {
+  padding: 0 12px;
+  flex-shrink: 0;
+}
+
+/* Specific column widths */
+.nameColumn {
+  flex: 2;
+  min-width: 200px;
+}
+
+.rankColumn {
+  flex: 0.8;
+  min-width: 100px;
+}
+
+.scoreColumn {
+  flex: 1;
+  min-width: 120px;
+}
+
+.hiddenGemColumn {
+  flex: 1.2;
+  min-width: 150px;
+}
+
+.recruitabilityColumn {
+  flex: 1.2;
+  min-width: 150px;
+}
+
+.dimensionColumn {
+  flex: 1.5;
+  min-width: 180px;
+}
+
+.dimensionScoreColumn {
+  flex: 1.2;
+  min-width: 120px;
+}
+
+.candidateHeader {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  display: block;
+}
+
+.dimensionSubheader {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: block;
+}
+
+.dimensionIcon {
+  font-size: 20px;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+.dimensionName {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Candidate name styling */
+.candidateName {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 15px;
+}
+
+/* Rank badge */
+.rankBadge {
+  background: rgba(25, 118, 210, 0.1);
+  border: 1px solid rgba(25, 118, 210, 0.3);
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.rankText {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-blue);
+  display: block;
+}
+
+/* Score styling */
+.scoreText {
+  font-size: 16px;
+  font-weight: 700;
+  display: block;
+  text-align: center;
+}
+
+.scoreExcellent {
+  color: #2b8a3e;
+}
+
+.scoreGood {
+  color: #1971c2;
+}
+
+.scoreModerate {
+  color: #e67e22;
+}
+
+.scorePoor {
+  color: #c92a2a;
+}
+
+/* Status/stars badges */
+.statusBadge {
+  border-radius: 4px;
+  padding: 4px 8px;
+  display: inline-block;
+}
+
+.statusBadgeText {
+  font-size: 11px;
+  font-weight: 600;
+  display: block;
+}
+
+.statusExcellent {
+  background: rgba(43, 138, 62, 0.1);
+  border: 1px solid rgba(43, 138, 62, 0.3);
+}
+
+.statusExcellent .statusBadgeText {
+  color: #2b8a3e;
+}
+
+.statusGood {
+  background: rgba(25, 118, 210, 0.1);
+  border: 1px solid rgba(25, 118, 210, 0.3);
+}
+
+.statusGood .statusBadgeText {
+  color: #1971c2;
+}
+
+.statusModerate {
+  background: rgba(235, 160, 12, 0.1);
+  border: 1px solid rgba(235, 160, 12, 0.3);
+}
+
+.statusModerate .statusBadgeText {
+  color: #e67e22;
+}
+
+.statusHighRisk {
+  background: rgba(201, 42, 42, 0.1);
+  border: 1px solid rgba(201, 42, 42, 0.3);
+}
+
+.statusHighRisk .statusBadgeText {
+  color: #c92a2a;
+}
+
+/* Hidden gem badge */
+.hiddenGemBadge {
+  background: rgba(235, 160, 12, 0.1);
+  border: 1px solid rgba(235, 160, 12, 0.3);
+  border-radius: 4px;
+  padding: 6px 12px;
+}
+
+.hiddenGemText {
+  font-size: 11px;
+  font-weight: 600;
+  color: #e67e22;
+  display: block;
+}
+
+/* Skills comparison styling */
+.skillColumn {
+  flex: 1;
+  min-width: 120px;
+}
+
+.matchColumn {
+  flex: 0.8;
+  min-width: 100px;
+}
+
+.missingColumn {
+  flex: 0.8;
+  min-width: 100px;
+}
+
+.overlapColumn {
+  flex: 1;
+  min-width: 120px;
+}
+
+.candidateSkillColumn {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+}
+
+.skillName {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.hasSkillBadge {
+  background: rgba(43, 138, 62, 0.1);
+  border: 1px solid rgba(43, 138, 62, 0.3);
+  border-radius: 4px;
+}
+
+.skillCheckmark {
+  color: #2b8a3e;
+  font-weight: 600;
+  font-size: 14px;
+  display: block;
+}
+
+.skillX {
+  color: #c92a2a;
+  font-weight: 600;
+  font-size: 14px;
+  display: block;
+}
+
+.matchingBadge {
+  background: rgba(43, 138, 62, 0.1);
+  border: 1px solid rgba(43, 138, 62, 0.3);
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.matchingText {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2b8a3e;
+  display: block;
+  text-align: center;
+}
+
+.badgeText {
+  font-size: 11px;
+  font-weight: 600;
+  display: block;
+  text-align: center;
+}
+
+/* Best value highlighting */
+.bestValue {
+  background: rgba(43, 138, 62, 0.05);
+  border-left: 3px solid #2b8a3e;
+}
+
+.bestBadge {
+  background: rgba(43, 138, 62, 0.1);
+  border: 1px solid rgba(43, 138, 62, 0.3);
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin-left: 8px;
+}
+
+.bestBadgeText {
+  font-size: 10px;
+  color: #2b8a3e;
+  font-weight: 600;
+  display: block;
+}
+
+/* Dimension color coding */
+.colorBased {
+  /* Colors are applied inline based on dimension */
+}
+
+.defaultColor {
+  color: var(--text-primary);
+}
+
+/* Verdict card styling */
+.verdictCard {
+  padding: 32px;
+  background: linear-gradient(135deg, rgba(43, 138, 62, 0.05) 0%, rgba(25, 118, 210, 0.05) 100%);
+  border: 2px solid rgba(43, 138, 62, 0.2);
+  border-radius: 8px;
+  margin: 24px;
+}
+
+.verdictHeader {
+  margin-bottom: 24px;
+}
+
+.verdictTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+}
+
+.verdictReason {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: 12px;
+  display: block;
+  padding-left: 24px;
+  position: relative;
+}
+
+.verdictReason::before {
+  content: "•";
+  color: #2b8a3e;
+  font-weight: 600;
+  font-size: 18px;
+  position: absolute;
+  left: 8px;
+  top: 0;
+}
+
+.placementGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.placementItem {
+  padding: 20px;
+  background: var(--bg-page);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.placementItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.placementTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.placementValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+}
+
+/* Footer */
+.comparisonFooter {
+  padding: 16px 24px;
+  background: var(--bg-row);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  position: sticky;
+  bottom: 0;
+}
+
+.footerText {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* No data states */
+.noCandidatesText {
+  font-size: 16px;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  padding: 48px;
+  display: block;
+}
+
+/* Metric and value styling */
+.metricLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metricValuePlaceholder {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.careerValue {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.recruitabilityValue {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 500;
+  padding: 6px 12px;
+  background: var(--bg-row);
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Reason badges */
+.reasonBadge {
+  border-radius: 4px;
+  padding: 4px 8px;
+  display: inline-block;
+}
+
+.reasonBadgeStrength {
+  background: rgba(43, 138, 62, 0.1);
+  border: 1px solid rgba(43, 138, 62, 0.3);
+}
+
+.reasonBadgeStrength .reasonBadgeText {
+  color: #2b8a3e;
+}
+
+.reasonBadgeWeakness {
+  background: rgba(201, 42, 42, 0.1);
+  border: 1px solid rgba(201, 42, 42, 0.3);
+}
+
+.reasonBadgeWeakness .reasonBadgeText {
+  color: #c92a2a;
+}
+
+.reasonBadgeAdvantage {
+  background: rgba(25, 118, 210, 0.1);
+  border: 1px solid rgba(25, 118, 210, 0.3);
+}
+
+.reasonBadgeAdvantage .reasonBadgeText {
+  color: #1971c2;
+}
+
+.reasonBadgeConcern {
+  background: rgba(235, 160, 12, 0.1);
+  border: 1px solid rgba(235, 160, 12, 0.3);
+}
+
+.reasonBadgeConcern .reasonBadgeText {
+  color: #e67e22;
+}
+
+.reasonText {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.reasonBadgeText {
+  font-size: 11px;
+  font-weight: 600;
+  display: block;
+}
+
+.reasonContent {
+  font-size: 12px;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+/* Loading and error states */
+.loadingState, .errorState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  background: var(--bg-page);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.errorTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent-red);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.errorMessage {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.retryButton {
+  padding: 8px 16px;
+  background: var(--accent-red);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.retryButton:hover {
+  background: #c92a2a;
+}
+
+/* Dimension header columns for scrollable table */
+.dimensionHeaderColumn {
+  flex: 1;
+  min-width: 120px;
+  padding: 8px;
+}
+
+.dimensionScoreColumn {
+  flex: 1.2;
+  min-width: 100px;
+  text-align: center;
+}
+
+.dimensionIcon {
+  font-size: 20px;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+.dimensionName {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Recruitability metric columns */
+.recruitabilityMetricColumn {
+  flex: 1.2;
+  min-width: 140px;
+}
+
+.recruitabilityValueColumn {
+  flex: 1;
+  min-width: 100px;
+}
+
+.candidateRecruitabilityColumn {
+  flex: 1.2;
+  min-width: 140px;
+}
+
+.careerMetricColumn {
+  flex: 1.2;
+  min-width: 140px;
+}
+
+.candidateCareerColumn {
+  flex: 1.2;
+  min-width: 140px;
+  text-align: center;
+}
+
+.candidateReasonColumn {
+  flex: 1.5;
+  min-width: 160px;
+}
+
+.reasonColumn {
+  flex: 1.2;
+  min-width: 140px;
+}
+
+.reasonTypeColumn {
+  flex: 1;
+  min-width: 100px;
+}
+
+.noselectColumn {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+}

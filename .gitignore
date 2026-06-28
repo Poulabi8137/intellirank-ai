@@ -1,0 +1,66 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Dataset (external, large files)
+redrob_dataset/
+
+# Generated outputs
+output/
+
+# Coverage reports
+coverage/
+
+# AI tooling config
+.claude/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Internal planning and development documentation
+PROJECT_CONTEXT.md
+IMPLEMENTATION_PLAN.md
+GAP_ANALYSIS.md
+FRONTEND_UX_SPEC.md
+FRONTEND_RISK_REPORT.md
+FEATURE_ENGINEERING.md
+DATASET_ANALYSIS.md
+ARCHITECTURE_REVIEW.md
+
+# Pytest cache documentation
+.pytest_cache/README.md
+
+# Temporary / local files
+*.local
