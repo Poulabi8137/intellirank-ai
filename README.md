@@ -629,9 +629,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 **Software Engineer** | **AI/ML Enthusiast** | **Open Source Contributor**
 
-Email: [poulabighosh@example.com](mailto:poulabighosh@example.com)
-
-Location: [Cambridge, MA](https://maps.google.com/?q=Cambridge,MA)
+Email: [poulabighosh44@gmail.com](mailto:poulabighosh@example.com)
 
 ### Why IntelliRank AI
 
