@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Hidden Gems View - Phase 9 CSS Styles (Part 1)
  * 
  * This file contains the styling for the HiddenGemsView component,
@@ -87,7 +87,7 @@
 .sortSelect:focus {
   outline: none;
   border-color: var(--accent-blue);
-  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+  box-shadow: 0 0 0 2px var(--tier-good-border);
 }
 
 .sortDirectionControl {
@@ -114,7 +114,7 @@
 }
 
 .sortDirectionButton.active {
-  background: rgba(25, 118, 210, 0.1);
+  background: var(--tier-good-bg);
   border-color: var(--accent-blue);
   color: var(--accent-blue);
 }
@@ -198,13 +198,13 @@
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-md);
   border-color: var(--accent-blue);
 }
 
 .cardExpanded {
   border-color: var(--accent-green);
-  background: rgba(43, 138, 62, 0.02);
+  background: var(--tier-strong-bg);
 }
 
 /* Card header with candidate info */
@@ -217,8 +217,8 @@
   align-items: center;
   justify-content: center;
   padding: 6px 10px;
-  background: rgba(25, 118, 210, 0.1);
-  border: 1px solid rgba(25, 118, 210, 0.3);
+  background: var(--tier-good-bg);
+  border: 1px solid var(--tier-good-border);
   border-radius: 4px;
   font-size: 13px;
   font-weight: 600;
@@ -238,12 +238,12 @@
   display: inline-flex;
   align-items: center;
   padding: 4px 10px;
-  background: rgba(235, 160, 12, 0.1);
-  border: 1px solid rgba(235, 160, 12, 0.3);
+  background: var(--tier-possible-bg);
+  border: 1px solid var(--tier-possible-border);
   border-radius: 4px;
   font-size: 11px;
   font-weight: 600;
-  color: #e67e22;
+  color: var(--status-amber);
 }
 
 .headerMeta {
@@ -303,7 +303,7 @@
 }
 
 .metricBox:hover {
-  background: rgba(25, 118, 210, 0.05);
+  background: var(--tier-good-bg);
   border-color: var(--accent-blue);
 }
 
@@ -325,11 +325,11 @@
 }
 
 .potentialColor {
-  color: #2b8a3e;
+  color: var(--tier-strong);
 }
 
 .recruitabilityColor {
-  color: #1971c2;
+  color: var(--tier-good);
 }
 
 .confidenceText {
@@ -381,8 +381,8 @@
 }
 
 .reasonCard:hover {
-  background: rgba(235, 160, 12, 0.05);
-  border-color: rgba(235, 160, 12, 0.3);
+  background: var(--tier-possible-bg);
+  border-color: var(--tier-possible-border);
 }
 
 .reasonBadge {
@@ -391,8 +391,8 @@
   justify-content: center;
   width: 24px;
   height: 24px;
-  background: rgba(235, 160, 12, 0.1);
-  border: 1px solid rgba(235, 160, 12, 0.3);
+  background: var(--tier-possible-bg);
+  border: 1px solid var(--tier-possible-border);
   border-radius: 50%;
   margin-right: 12px;
 }
@@ -400,7 +400,7 @@
 .reasonBadgeText {
   font-size: 14px;
   font-weight: 600;
-  color: #e67e22;
+  color: var(--status-amber);
 }
 
 .reasonText {
@@ -412,9 +412,9 @@
 /* Potential section */
 .potentialSection {
   padding: 20px;
-  background: rgba(43, 138, 62, 0.05);
+  background: var(--tier-strong-bg);
   border-radius: 8px;
-  border: 1px solid rgba(43, 138, 62, 0.1);
+  border: 1px solid var(--tier-strong-bg);
 }
 
 .potentialHeader {
@@ -424,7 +424,7 @@
 .potentialScore {
   font-size: 32px;
   font-weight: 700;
-  color: #2b8a3e;
+  color: var(--tier-strong);
   display: block;
   margin-bottom: 4px;
 }
@@ -473,7 +473,7 @@
 .longTermRecommendation {
   margin-top: 20px;
   padding-top: 16px;
-  border-top: 1px solid rgba(43, 138, 62, 0.2);
+  border-top: 1px solid var(--tier-strong-border);
 }
 
 /* Explainability summary section */
@@ -492,7 +492,7 @@
 
 .summaryCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-sm);
   border-color: var(--accent-blue);
 }
 
@@ -516,9 +516,9 @@
 /* Recruitability section */
 .recruitabilitySection {
   padding: 20px;
-  background: rgba(25, 118, 210, 0.05);
+  background: var(--tier-good-bg);
   border-radius: 8px;
-  border: 1px solid rgba(25, 118, 210, 0.1);
+  border: 1px solid var(--tier-good-bg);
 }
 
 .blockersContainer, .signalsContainer {
@@ -547,15 +547,15 @@
 }
 
 .blockerBadge {
-  background: rgba(201, 42, 42, 0.1);
-  border: 1px solid rgba(201, 42, 42, 0.3);
-  color: #c92a2a;
+  background: var(--tier-pass-bg);
+  border: 1px solid var(--tier-pass-border);
+  color: var(--tier-pass);
 }
 
 .positiveSignalBadge {
-  background: rgba(43, 138, 62, 0.1);
-  border: 1px solid rgba(43, 138, 62, 0.3);
-  color: #2b8a3e;
+  background: var(--tier-strong-bg);
+  border: 1px solid var(--tier-strong-border);
+  color: var(--tier-strong);
 }
 
 .noBlockersText, .noSignalsText, .noRecruitabilityText {
@@ -572,7 +572,7 @@
 .hiringRecommendation {
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid rgba(25, 118, 210, 0.2);
+  border-top: 1px solid var(--tier-good-border);
 }
 
 .recommendationLabel {
@@ -720,10 +720,11 @@
 
 /* ARIA and accessibility */
 .card[aria-expanded="true"] {
-  border-left: 4px solid #2b8a3e;
+  border-left: 4px solid var(--tier-strong);
 }
 
 .card:focus-within {
   outline: 2px solid var(--accent-blue);
   outline-offset: 2px;
 }
+

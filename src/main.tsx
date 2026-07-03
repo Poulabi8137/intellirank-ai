@@ -24,7 +24,7 @@ function Root() {
   return (
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <Theme appearance="dark" accentColor="iris" grayColor="slate" radius="small">
+        <Theme accentColor="iris" grayColor="slate" radius="small">
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<App />} />

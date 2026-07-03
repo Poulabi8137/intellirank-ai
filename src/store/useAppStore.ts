@@ -9,6 +9,7 @@ export type SortDirection = 'asc' | 'desc';
 export type TierFilter = 'strong' | 'good' | 'possible' | 'weak';
 export type AvailabilityFilter = 'yes' | '60 days' | '90 days' | 'no';
 export type ExperienceRange = '0-2' | '3-5' | '6-10' | '10+';
+export type DashboardMode = 'all' | 'strong-hire' | 'immediate' | 'risks' | 'analytics';
 
 interface AppState {
   // Data
@@ -71,6 +72,12 @@ interface AppState {
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   reset: () => void;
+  // Dashboard mode — workspace filter preset
+  dashboardMode: DashboardMode;
+  setDashboardMode: (mode: DashboardMode) => void;
+  // Actions — UI
+  insightsOpen: boolean;
+  toggleInsights: () => void;
 }
 
 const initialState = {
@@ -92,6 +99,8 @@ const initialState = {
   page: 1,
   pageSize: 25,
   view: 'ranked' as const,
+  insightsOpen: false,
+  dashboardMode: 'all' as DashboardMode,
 };
 
 export const useAppStore = create<AppState>()(
@@ -170,6 +179,8 @@ export const useAppStore = create<AppState>()(
       setLoading: (isLoading) => set({ isLoading }),
       setError: (error) => set({ error, isLoading: false }),
       reset: () => set(initialState),
+      toggleInsights: () => set(s => ({ insightsOpen: !s.insightsOpen })),
+      setDashboardMode: (dashboardMode) => set({ dashboardMode, page: 1, selectedId: null }),
     }),
     {
       name: 'intellirank-storage',

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Box, Flex, Text } from '@radix-ui/themes';
 import { useAppStore } from '../../store/useAppStore';
 import styles from './SearchBar.module.css';
 
@@ -14,7 +13,6 @@ export function SearchBar({ resultCount, totalCount }: SearchBarProps) {
   const [localValue, setLocalValue] = useState(searchQuery);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Sync external query changes (e.g., clear all filters) back to local state
   useEffect(() => {
     setLocalValue(searchQuery);
   }, [searchQuery]);
@@ -39,18 +37,18 @@ export function SearchBar({ resultCount, totalCount }: SearchBarProps) {
   const isFiltered = localValue.length > 0;
 
   return (
-    <Box className={styles.wrapper} role="search" aria-label="Search candidates">
-      <Flex align="center" gap="2" className={styles.inputRow}>
-        <Box className={styles.iconSearch} aria-hidden="true">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.5"/>
-            <path d="M9.5 9.5L12 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <div className={styles.wrapper} role="search" aria-label="Search candidates">
+      <div className={styles.inputRow}>
+        <span className={styles.iconSearch} aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <circle cx="5" cy="5" r="3.5" stroke="currentColor" strokeWidth="1.4"/>
+            <path d="M8 8l2.5 2.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
           </svg>
-        </Box>
+        </span>
         <input
           type="search"
           className={styles.input}
-          placeholder="Search by name, company, or location…"
+          placeholder="Search candidates…"
           value={localValue}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
@@ -59,7 +57,7 @@ export function SearchBar({ resultCount, totalCount }: SearchBarProps) {
           autoComplete="off"
           spellCheck={false}
         />
-        {isFiltered && (
+        {isFiltered ? (
           <button
             className={styles.clearBtn}
             onClick={handleClear}
@@ -68,15 +66,17 @@ export function SearchBar({ resultCount, totalCount }: SearchBarProps) {
           >
             ✕
           </button>
+        ) : (
+          <kbd className={styles.kbd} aria-hidden="true">/</kbd>
         )}
-      </Flex>
+      </div>
       {isFiltered && (
-        <Text as="p" className={styles.resultHint} role="status" aria-live="polite">
+        <p className={styles.resultHint} role="status" aria-live="polite">
           {resultCount === totalCount
             ? `${totalCount} candidates`
-            : `${resultCount} of ${totalCount} candidates`}
-        </Text>
+            : `${resultCount} of ${totalCount}`}
+        </p>
       )}
-    </Box>
+    </div>
   );
 }

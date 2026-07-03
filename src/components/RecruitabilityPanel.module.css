@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Recruitability Panel - Phase 7 CSS Styles
  * 
  * This file contains all CSS styling for the RecruitabilityPanel component,
@@ -54,8 +54,8 @@
 }
 
 .scoreBadge {
-  background: rgba(25, 118, 210, 0.1);
-  border: 1px solid rgba(25, 118, 210, 0.3);
+  background: var(--tier-good-bg);
+  border: 1px solid var(--tier-good-border);
   border-radius: 6px;
   padding: 8px 16px;
   text-align: center;
@@ -145,39 +145,39 @@
 }
 
 .excellentStatus {
-  background: rgba(43, 138, 62, 0.1);
-  border: 1px solid rgba(43, 138, 62, 0.3);
+  background: var(--tier-strong-bg);
+  border: 1px solid var(--tier-strong-border);
 }
 
 .excellentStatus .statusBadgeText {
-  color: #2b8a3e;
+  color: var(--tier-strong);
 }
 
 .goodStatus {
-  background: rgba(25, 118, 210, 0.1);
-  border: 1px solid rgba(25, 118, 210, 0.3);
+  background: var(--tier-good-bg);
+  border: 1px solid var(--tier-good-border);
 }
 
 .goodStatus .statusBadgeText {
-  color: #1971c2;
+  color: var(--tier-good);
 }
 
 .moderateStatus {
-  background: rgba(235, 160, 12, 0.1);
-  border: 1px solid rgba(235, 160, 12, 0.3);
+  background: var(--tier-possible-bg);
+  border: 1px solid var(--tier-possible-border);
 }
 
 .moderateStatus .statusBadgeText {
-  color: #e67e22;
+  color: var(--status-amber);
 }
 
 .highRiskStatus {
-  background: rgba(201, 42, 42, 0.1);
-  border: 1px solid rgba(201, 42, 42, 0.3);
+  background: var(--tier-pass-bg);
+  border: 1px solid var(--tier-pass-border);
 }
 
 .highRiskStatus .statusBadgeText {
-  color: #c92a2a;
+  color: var(--tier-pass);
 }
 
 .severityBadge {
@@ -195,30 +195,30 @@
 }
 
 .highSeverity {
-  background: rgba(201, 42, 42, 0.1);
-  border: 1px solid rgba(201, 42, 42, 0.3);
+  background: var(--tier-pass-bg);
+  border: 1px solid var(--tier-pass-border);
 }
 
 .highSeverity .severityBadgeText {
-  color: #c92a2a;
+  color: var(--tier-pass);
 }
 
 .mediumSeverity {
-  background: rgba(235, 160, 12, 0.1);
-  border: 1px solid rgba(235, 160, 12, 0.3);
+  background: var(--tier-possible-bg);
+  border: 1px solid var(--tier-possible-border);
 }
 
 .mediumSeverity .severityBadgeText {
-  color: #e67e22;
+  color: var(--status-amber);
 }
 
 .lowSeverity {
-  background: rgba(43, 138, 62, 0.1);
-  border: 1px solid rgba(43, 138, 62, 0.3);
+  background: var(--tier-strong-bg);
+  border: 1px solid var(--tier-strong-border);
 }
 
 .lowSeverity .severityBadgeText {
-  color: #2b8a3e;
+  color: var(--tier-strong);
 }
 
 .impactBadge {
@@ -234,39 +234,39 @@
 }
 
 .blockImpact {
-  background: rgba(201, 42, 42, 0.1);
-  border: 1px solid rgba(201, 42, 42, 0.3);
+  background: var(--tier-pass-bg);
+  border: 1px solid var(--tier-pass-border);
 }
 
 .blockImpact .impactBadgeText {
-  color: #c92a2a;
+  color: var(--tier-pass);
 }
 
 .delayImpact {
-  background: rgba(235, 160, 12, 0.1);
-  border: 1px solid rgba(235, 160, 12, 0.3);
+  background: var(--tier-possible-bg);
+  border: 1px solid var(--tier-possible-border);
 }
 
 .delayImpact .impactBadgeText {
-  color: #e67e22;
+  color: var(--status-amber);
 }
 
 .costImpact {
-  background: rgba(25, 118, 210, 0.1);
-  border: 1px solid rgba(25, 118, 210, 0.3);
+  background: var(--tier-good-bg);
+  border: 1px solid var(--tier-good-border);
 }
 
 .costImpact .impactBadgeText {
-  color: #1971c2;
+  color: var(--tier-good);
 }
 
 .neutralImpact {
-  background: rgba(134, 142, 150, 0.1);
-  border: 1px solid rgba(134, 142, 150, 0.3);
+  background: var(--tier-weak-bg);
+  border: 1px solid var(--tier-weak-border);
 }
 
 .neutralImpact .impactBadgeText {
-  color: #495057;
+  color: var(--text-tertiary);
 }
 
 /* Blockers list styling */
@@ -304,7 +304,7 @@
 
 .blockerDetails {
   padding: 12px;
-  background: rgba(25, 118, 210, 0.05);
+  background: var(--tier-good-bg);
   border-radius: 4px;
   margin-top: 8px;
 }
@@ -343,13 +343,13 @@
 
 .noBlockersText {
   font-size: 14px;
-  color: #2b8a3e;
+  color: var(--tier-strong);
   font-weight: 600;
   text-align: center;
   padding: 24px;
-  background: rgba(43, 138, 62, 0.05);
+  background: var(--tier-strong-bg);
   border-radius: 6px;
-  border: 1px dashed #2b8a3e;
+  border: 1px dashed var(--tier-strong);
 }
 
 /* Positive signals grid styling */
@@ -384,21 +384,21 @@
 }
 
 .positiveImpact {
-  background: rgba(43, 138, 62, 0.1);
-  border: 1px solid rgba(43, 138, 62, 0.3);
+  background: var(--tier-strong-bg);
+  border: 1px solid var(--tier-strong-border);
 }
 
 .positiveImpact .impactSignalBadgeText {
-  color: #2b8a3e;
+  color: var(--tier-strong);
 }
 
 .highImpact {
-  background: rgba(25, 118, 210, 0.1);
-  border: 1px solid rgba(25, 118, 210, 0.3);
+  background: var(--tier-good-bg);
+  border: 1px solid var(--tier-good-border);
 }
 
 .highImpact .impactSignalBadgeText {
-  color: #1971c2;
+  color: var(--tier-good);
 }
 
 .confidenceContainer {
@@ -423,30 +423,30 @@
 }
 
 .highConfidence {
-  background: rgba(43, 138, 62, 0.1);
-  border: 1px solid rgba(43, 138, 62, 0.3);
+  background: var(--tier-strong-bg);
+  border: 1px solid var(--tier-strong-border);
 }
 
 .highConfidence .confidenceBadgeText {
-  color: #2b8a3e;
+  color: var(--tier-strong);
 }
 
 .mediumConfidence {
-  background: rgba(235, 160, 12, 0.1);
-  border: 1px solid rgba(235, 160, 12, 0.3);
+  background: var(--tier-possible-bg);
+  border: 1px solid var(--tier-possible-border);
 }
 
 .mediumConfidence .confidenceBadgeText {
-  color: #e67e22;
+  color: var(--status-amber);
 }
 
 .lowConfidence {
-  background: rgba(201, 42, 42, 0.1);
-  border: 1px solid rgba(201, 42, 42, 0.3);
+  background: var(--tier-pass-bg);
+  border: 1px solid var(--tier-pass-border);
 }
 
 .lowConfidence .confidenceBadgeText {
-  color: #c92a2a;
+  color: var(--tier-pass);
 }
 
 .smallProgressBar {
@@ -456,10 +456,10 @@
 }
 
 /* Progress bar colors for RecruitabilityPanel */
-.progressExcellent { background-color: #2b8a3e; }
-.progressGood { background-color: #1971c2; }
-.progressModerate { background-color: #e67e22; }
-.progressPoor { background-color: #c92a2a; }
+.progressExcellent { background-color: var(--tier-strong); }
+.progressGood { background-color: var(--tier-good); }
+.progressModerate { background-color: var(--status-amber); }
+.progressPoor { background-color: var(--tier-pass); }
 
 /* Recruitability Signals Table styling */
 .sortControls {
@@ -480,7 +480,7 @@
 }
 
 .sortButton.activeSort {
-  background: rgba(25, 118, 210, 0.1);
+  background: var(--tier-good-bg);
   border-color: var(--accent-blue);
   color: var(--accent-blue);
 }
@@ -610,30 +610,30 @@
 }
 
 .highRiskColor {
-  background: rgba(201, 42, 42, 0.1);
-  border: 1px solid rgba(201, 42, 42, 0.3);
+  background: var(--tier-pass-bg);
+  border: 1px solid var(--tier-pass-border);
 }
 
 .highRiskColor .riskBadgeText {
-  color: #c92a2a;
+  color: var(--tier-pass);
 }
 
 .mediumRiskColor {
-  background: rgba(235, 160, 12, 0.1);
-  border: 1px solid rgba(235, 160, 12, 0.3);
+  background: var(--tier-possible-bg);
+  border: 1px solid var(--tier-possible-border);
 }
 
 .mediumRiskColor .riskBadgeText {
-  color: #e67e22;
+  color: var(--status-amber);
 }
 
 .lowRiskColor {
-  background: rgba(43, 138, 62, 0.1);
-  border: 1px solid rgba(43, 138, 62, 0.3);
+  background: var(--tier-strong-bg);
+  border: 1px solid var(--tier-strong-border);
 }
 
 .lowRiskColor .riskBadgeText {
-  color: #2b8a3e;
+  color: var(--tier-strong);
 }
 
 .timelineValue {
@@ -645,28 +645,28 @@
 
 .timelineDetails {
   padding: 12px;
-  background: rgba(201, 42, 42, 0.05);
+  background: var(--tier-pass-bg);
   border-radius: 4px;
   margin-top: 8px;
 }
 
 .noTimelineRisksText {
   font-size: 14px;
-  color: #2b8a3e;
+  color: var(--tier-strong);
   font-weight: 600;
   text-align: center;
   padding: 24px;
-  background: rgba(43, 138, 62, 0.05);
+  background: var(--tier-strong-bg);
   border-radius: 6px;
-  border: 1px dashed #2b8a3e;
+  border: 1px dashed var(--tier-strong);
 }
 
 /* Recommendation styling */
 .recommendationContainer {
   padding: 20px;
-  background: rgba(43, 138, 62, 0.05);
+  background: var(--tier-strong-bg);
   border-radius: 6px;
-  border-left: 4px solid #2b8a3e;
+  border-left: 4px solid var(--tier-strong);
 }
 
 .recommendationText {
@@ -695,8 +695,8 @@
 
 .errorState {
   padding: 20px;
-  background: rgba(201, 42, 42, 0.04);
-  border: 1px solid rgba(201, 42, 42, 0.2);
+  background: var(--tier-pass-bg);
+  border: 1px solid var(--tier-pass-border);
   border-radius: 8px;
 }
 
@@ -728,28 +728,30 @@
 
 /* Risk indicators for timeline */
 .highRiskColor {
-  background: rgba(201, 42, 42, 0.1);
-  border: 1px solid rgba(201, 42, 42, 0.3);
+  background: var(--tier-pass-bg);
+  border: 1px solid var(--tier-pass-border);
 }
 
 .highRiskColor .riskBadgeText {
-  color: #c92a2a;
+  color: var(--tier-pass);
 }
 
 .mediumRiskColor {
-  background: rgba(235, 160, 12, 0.1);
-  border: 1px solid rgba(235, 160, 12, 0.3);
+  background: var(--tier-possible-bg);
+  border: 1px solid var(--tier-possible-border);
 }
 
 .mediumRiskColor .riskBadgeText {
-  color: #e67e22;
+  color: var(--status-amber);
 }
 
 .lowRiskColor {
-  background: rgba(43, 138, 62, 0.1);
-  border: 1px solid rgba(43, 138, 62, 0.3);
+  background: var(--tier-strong-bg);
+  border: 1px solid var(--tier-strong-border);
 }
 
 .lowRiskColor .riskBadgeText {
-  color: #2b8a3e;
+  color: var(--tier-strong);
 }
+
+

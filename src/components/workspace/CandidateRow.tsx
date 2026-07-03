@@ -1,223 +1,217 @@
 import { useCallback } from 'react';
-import { Box, Flex, Text } from '@radix-ui/themes';
 import cn from 'clsx';
 import { useAppStore } from '../../store/useAppStore';
 import { getCandidateTier } from '../../hooks/useFilteredCandidates';
-import { getAIRecommendation } from '../../intellirank/aiEngine';
-import type { Candidate } from '../../types/api';
+import { getAIRecommendation, getRecConfig, getConfidenceLevel } from '../../intellirank/aiEngine';
+import type { Candidate, ScoreBarData } from '../../types/api';
 import styles from './CandidateRow.module.css';
 
-const TIER_CONFIG = {
-  strong: { label: 'Strong', color: '#22c55e', bg: 'rgba(34,197,94,0.1)' },
-  good: { label: 'Good', color: '#3b82f6', bg: 'rgba(59,130,246,0.1)' },
-  possible: { label: 'Possible', color: '#f59e0b', bg: 'rgba(245,158,11,0.1)' },
-  weak: { label: 'Weak', color: '#6b7280', bg: 'rgba(107,114,128,0.1)' },
+const TIER_COLOR: Record<string, string> = {
+  strong:   '#22c55e',
+  good:     '#3b82f6',
+  possible: '#f59e0b',
+  weak:     '#64748b',
 };
 
-function getRankColor(rank: number): string {
-  if (rank === 1) return '#f5c842';
-  if (rank === 2) return '#9ea9b5';
-  if (rank === 3) return '#b27840';
-  if (rank <= 10) return '#7c5df7';
-  if (rank <= 25) return '#4e4e78';
-  return '#373756';
+function getRankStyle(rank: number): React.CSSProperties {
+  if (rank === 1)  return { color: '#f5c842', fontWeight: 800 };
+  if (rank === 2)  return { color: '#a8b4c8', fontWeight: 700 };
+  if (rank === 3)  return { color: '#c27f3a', fontWeight: 700 };
+  if (rank <= 10)  return { color: '#a99cff',  fontWeight: 600 };
+  return { color: 'var(--text-muted)', fontWeight: 500 };
 }
 
-const AVAIL_CONFIG: Record<string, { label: string; color: string }> = {
-  'yes': { label: 'Immediate', color: '#22c55e' },
-  '60 days': { label: '60 days', color: '#f59e0b' },
-  '90 days': { label: '90 days', color: '#ef4444' },
-  'no': { label: 'Not avail.', color: '#6b7280' },
-};
-
-const DIMENSIONS = ['Skill Fit', 'Career Intel', 'Recruitability', 'Potential', 'Education'] as const;
-const DIM_SHORT: Record<string, string> = {
-  'Skill Fit': 'Skill', 'Career Intel': 'Career', 'Recruitability': 'Recruit',
-  'Potential': 'Potential', 'Education': 'Edu',
-};
-
-interface MiniBarProps {
-  score: number;
-  label: string;
+function getInitials(headline?: string): string {
+  if (!headline) return '?';
+  const words = headline.trim().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return '?';
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return (words[0][0] + words[1][0]).toUpperCase();
 }
 
-function MiniBar({ score, label }: MiniBarProps) {
-  const pct = Math.max(0, Math.min(100, score));
-  const color = pct >= 85 ? '#22c55e' : pct >= 70 ? '#3b82f6' : pct >= 55 ? '#f59e0b' : '#6b7280';
+// Map dimension names to compact skill chip labels
+const DIM_LABEL: Record<string, string> = {
+  'Skill Fit':    'ML Engineering',
+  'Career Intel': 'Leadership',
+  'Potential':    'High Growth',
+  'Education':    'Research',
+  'Recruitability': 'Quick Join',
+};
+
+function getDimColor(score: number): string {
+  if (score >= 85) return '#22c55e';
+  if (score >= 70) return '#3b82f6';
+  if (score >= 55) return '#f59e0b';
+  return '#64748b';
+}
+
+function SkillChips({ dims }: { dims: ScoreBarData[] }) {
+  const top = [...dims].sort((a, b) => b.score - a.score).slice(0, 2).filter(d => d.score >= 65);
+  if (top.length === 0) return null;
   return (
-    <Box className={styles.miniBarCell} aria-label={`${label}: ${score}`}>
-      <Text className={styles.miniBarLabel}>{DIM_SHORT[label] ?? label}</Text>
-      <Box className={styles.miniBarTrack}>
-        <Box className={styles.miniBarFill} style={{ width: `${pct}%`, background: color }} />
-      </Box>
-      <Text className={styles.miniBarValue}>{score > 0 ? Math.round(score) : '—'}</Text>
-    </Box>
+    <div className={styles.skillChips} aria-label="Top skill dimensions">
+      {top.map(d => {
+        const color = getDimColor(d.score);
+        return (
+          <span
+            key={d.dimension}
+            className={styles.skillChip}
+            style={{ color, borderColor: `${color}33`, background: `${color}0e` }}
+            title={`${d.dimension}: ${d.score.toFixed(0)}/100`}
+          >
+            {DIM_LABEL[d.dimension] ?? d.dimension}
+          </span>
+        );
+      })}
+    </div>
   );
 }
 
+const AVAIL: Record<string, { label: string; color: string; pulse: boolean }> = {
+  'yes':     { label: 'Immediate',   color: '#10b981', pulse: true  },
+  '60 days': { label: '60 days',     color: '#f59e0b', pulse: false },
+  '90 days': { label: '90 days',     color: '#ef4444', pulse: false },
+  'no':      { label: 'Unavailable', color: '#64748b', pulse: false },
+};
+
 interface CandidateRowProps {
-  candidate: Candidate;
-  index: number;
+  candidate:  Candidate;
+  index:      number;
   isSelected: boolean;
   isCompared: boolean;
-  onSelect: (id: string) => void;
+  onSelect:   (id: string) => void;
 }
 
 export function CandidateRow({ candidate, index, isSelected, isCompared, onSelect }: CandidateRowProps) {
-  const addToCompare = useAppStore(s => s.addToCompare);
+  const addToCompare      = useAppStore(s => s.addToCompare);
   const removeFromCompare = useAppStore(s => s.removeFromCompare);
-  const compareIds = useAppStore(s => s.compareIds);
+  const compareIds        = useAppStore(s => s.compareIds);
 
-  const tier = getCandidateTier(candidate.overall_score);
-  const tierConf = TIER_CONFIG[tier];
-  const aiRec = getAIRecommendation(candidate.overall_score);
-  const availConf = candidate.availability ? AVAIL_CONFIG[candidate.availability] : null;
-  const recruScore = candidate.recruitability?.score ??
-    candidate.dimension_scores?.find(d => d.dimension === 'Recruitability')?.score;
+  const tier      = getCandidateTier(candidate.overall_score);
+  const tierColor = TIER_COLOR[tier];
+  const rec       = getAIRecommendation(candidate.overall_score);
+  const recConf   = getRecConfig(rec);
+  const conf      = getConfidenceLevel(candidate);
+  const avail     = candidate.availability ? AVAIL[candidate.availability] : null;
+  const initials  = getInitials(candidate.headline);
+  const dims      = candidate.dimension_scores ?? [];
 
-  const handleRowClick = useCallback(() => {
-    onSelect(candidate.id);
+  const handleClick = useCallback(() => onSelect(candidate.id), [candidate.id, onSelect]);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(candidate.id); }
   }, [candidate.id, onSelect]);
 
-  const handleRowKeyDown = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      onSelect(candidate.id);
-    }
-  }, [candidate.id, onSelect]);
-
-  const handleCompareToggle = useCallback((e: React.MouseEvent | React.KeyboardEvent) => {
+  const handleCompare = useCallback((e: React.MouseEvent | React.KeyboardEvent) => {
     e.stopPropagation();
-    if (isCompared) {
-      removeFromCompare(candidate.id);
-    } else if (compareIds.length < 5) {
-      addToCompare(candidate.id);
-    }
+    if (isCompared) removeFromCompare(candidate.id);
+    else if (compareIds.length < 5) addToCompare(candidate.id);
   }, [candidate.id, isCompared, compareIds.length, addToCompare, removeFromCompare]);
 
-  const canAddToCompare = !isCompared && compareIds.length < 5;
+  const canCompare = !isCompared && compareIds.length < 5;
 
   return (
-    <Box
+    <div
       className={cn(styles.row, isSelected && styles.rowSelected, isCompared && styles.rowCompared)}
       role="row"
       aria-selected={isSelected}
+      aria-rowindex={index + 1}
       tabIndex={0}
-      onClick={handleRowClick}
-      onKeyDown={handleRowKeyDown}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
       data-testid={`candidate-row-${candidate.id}`}
+      style={{ '--row-tier-color': tierColor } as React.CSSProperties}
     >
-      {/* Rank */}
-      <Box className={styles.cellRank} role="cell">
-        <Text className={styles.rank} style={{ color: getRankColor(candidate.rank) }}>
-          #{candidate.rank}
-        </Text>
+      {/* 1 — Rank */}
+      <div className={styles.cellRank} role="cell">
+        <span className={styles.rank} style={getRankStyle(candidate.rank)}>
+          {candidate.rank}
+        </span>
         {candidate.hidden_by && (
-          <Box className={styles.gemDot} aria-label="Hidden gem" title="Hidden gem" />
+          <span className={styles.gemMarker} title={`Hidden gem: ${candidate.hidden_by}`} aria-label="Hidden gem">◆</span>
         )}
-      </Box>
+      </div>
 
-      {/* Candidate info */}
-      <Box className={styles.cellCandidate} role="cell">
-        <Text className={styles.headline} title={candidate.headline ?? candidate.id}>
+      {/* 2 — Avatar */}
+      <div className={styles.cellAvatar} role="cell" aria-hidden="true">
+        <div className={styles.avatar} style={{ borderColor: `${tierColor}55`, color: tierColor }}>
+          {initials}
+        </div>
+      </div>
+
+      {/* 3 — Candidate identity + skill chips */}
+      <div className={styles.cellCandidate} role="cell">
+        <span className={styles.headline} title={candidate.headline ?? candidate.id}>
           {candidate.headline ?? `Candidate ${candidate.id}`}
-        </Text>
-        <Flex align="center" gap="2" className={styles.meta}>
-          {candidate.current_company && (
-            <Text className={styles.metaItem}>{candidate.current_company}</Text>
-          )}
-          {candidate.current_company && candidate.location && (
-            <Text className={styles.metaDot} aria-hidden="true">·</Text>
-          )}
-          {candidate.location && (
-            <Text className={styles.metaItem}>{candidate.location}</Text>
-          )}
-          {candidate.experience !== undefined && (
-            <>
-              <Text className={styles.metaDot} aria-hidden="true">·</Text>
-              <Text className={styles.metaItem}>{candidate.experience}y exp</Text>
-            </>
-          )}
-        </Flex>
-      </Box>
+        </span>
+        <span className={styles.meta}>
+          {[
+            candidate.current_company,
+            candidate.location,
+            candidate.experience !== undefined ? `${candidate.experience}y exp` : null,
+          ].filter(Boolean).join(' · ')}
+        </span>
+        {dims.length > 0 && <SkillChips dims={dims} />}
+      </div>
 
-      {/* Overall score */}
-      <Box className={styles.cellScore} role="cell" aria-label={`Score: ${candidate.overall_score}`}>
-        <Box
-          className={styles.scoreBadge}
-          style={{
-            color: tierConf.color,
-            background: tierConf.bg,
-            border: `1px solid ${tierConf.color}30`,
-            boxShadow: tier === 'strong' ? `0 0 8px ${tierConf.color}1a` : 'none',
-          }}
-          title={`${tierConf.label} tier`}
+      {/* 4 — Recommendation badge */}
+      <div className={styles.cellRec} role="cell" aria-label={`Recommendation: ${rec}`}>
+        <div
+          className={styles.recBadge}
+          style={{ color: recConf.color, background: recConf.bg, borderColor: recConf.border }}
         >
-          <Text className={styles.scoreValue}>{candidate.overall_score.toFixed(1)}</Text>
-        </Box>
-        <Text className={styles.tierLabel} style={{ color: tierConf.color }}>
-          {aiRec}
-        </Text>
-      </Box>
+          <span className={styles.recDot} style={{ background: recConf.color }} aria-hidden="true" />
+          {rec}
+        </div>
+      </div>
 
-      {/* Dimension mini-bars */}
-      <Box className={styles.cellDimensions} role="cell" aria-label="Dimension scores">
-        <Flex gap="1" className={styles.dimRow}>
-          {DIMENSIONS.map(dim => {
-            const dimScore = candidate.dimension_scores?.find(d => d.dimension === dim)?.score ?? 0;
-            return <MiniBar key={dim} score={dimScore} label={dim} />;
-          })}
-        </Flex>
-      </Box>
+      {/* 5 — Score + Confidence */}
+      <div
+        className={styles.cellScore}
+        role="cell"
+        aria-label={`Score ${candidate.overall_score.toFixed(1)}, confidence ${conf}%`}
+      >
+        <span className={styles.scoreValue} style={{ color: tierColor }}>
+          {candidate.overall_score.toFixed(1)}
+        </span>
+        <span className={styles.confValue}>{conf}%</span>
+      </div>
 
-      {/* Recruitability score */}
-      <Box className={styles.cellRecruit} role="cell" aria-label={`Recruitability: ${recruScore ?? '—'}`}>
-        {recruScore !== undefined ? (
-          <Text
-            className={styles.recruitValue}
-            style={{ color: recruScore >= 80 ? '#22c55e' : recruScore >= 65 ? '#f59e0b' : '#ef4444' }}
-          >
-            {Math.round(recruScore)}
-          </Text>
+      {/* 6 — Availability */}
+      <div className={styles.cellAvail} role="cell">
+        {avail ? (
+          <span className={styles.availBadge} style={{ color: avail.color }}>
+            <span
+              className={cn(styles.availDot, avail.pulse && styles.availDotPulse)}
+              style={{ background: avail.color }}
+              aria-hidden="true"
+            />
+            {avail.label}
+          </span>
         ) : (
-          <Text className={styles.noData}>—</Text>
+          <span className={styles.noData}>—</span>
         )}
-      </Box>
+      </div>
 
-      {/* Availability */}
-      <Box className={styles.cellAvail} role="cell">
-        {availConf ? (
-          <Box
-            className={styles.availChip}
-            style={{ color: availConf.color, borderColor: `${availConf.color}44` }}
-          >
-            <Text className={styles.availLabel}>{availConf.label}</Text>
-          </Box>
-        ) : (
-          <Text className={styles.noData}>—</Text>
-        )}
-      </Box>
-
-      {/* Actions */}
-      <Box className={styles.cellActions} role="cell">
+      {/* 7 — Compare */}
+      <div className={styles.cellActions} role="cell">
         <button
           className={cn(
             styles.compareBtn,
             isCompared && styles.compareBtnActive,
-            !canAddToCompare && !isCompared && styles.compareBtnDisabled,
+            !canCompare && !isCompared && styles.compareBtnDisabled,
           )}
-          onClick={handleCompareToggle}
-          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleCompareToggle(e); }}
+          onClick={handleCompare}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleCompare(e); }}
           aria-label={isCompared ? 'Remove from compare' : 'Add to compare'}
           aria-pressed={isCompared}
           type="button"
-          title={!canAddToCompare && !isCompared ? 'Compare limit reached (5)' : undefined}
-          disabled={!canAddToCompare && !isCompared}
+          disabled={!canCompare && !isCompared}
+          title={!canCompare && !isCompared ? 'Compare limit reached (5)' : undefined}
         >
           {isCompared ? '✓' : '+'}
         </button>
-        <Text className={styles.rowIndex} aria-hidden="true">{index + 1}</Text>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

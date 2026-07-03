@@ -1,73 +1,52 @@
+/* ── Root shell ─────────────────────────────────────────────── */
+/* Document-flow: shell grows with content, browser scrolls. */
 .shell {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
-  background: var(--bg-page);
   color: var(--text-primary);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  overflow: hidden;
+  font-family: var(--font-sans);
 }
 
+/* ── Unsupported viewport ───────────────────────────────────── */
 .unsupported {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  gap: 12px;
+  gap: 10px;
   padding: 24px;
   text-align: center;
 }
 
 .unsupportedTitle {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   color: var(--text-primary);
   margin: 0;
+  letter-spacing: -0.02em;
 }
 
 .unsupportedText {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-secondary);
   max-width: 360px;
   margin: 0;
 }
 
+/* ── Body — width fills shell, height grows with content ──── */
 .body {
   display: flex;
-  flex: 1;
-  overflow: hidden;
-  min-height: 0;
-}
-
-.sidebarContainer {
-  flex-shrink: 0;
-  overflow: hidden;
-  display: flex;
   flex-direction: column;
+  /* NO flex: 1 — we want content height, not viewport-fill height */
 }
 
+/* ── Main content area ──────────────────────────────────────── */
 .main {
-  flex: 1;
-  overflow: hidden;
   min-width: 0;
   display: flex;
   flex-direction: column;
+  /* NO flex: 1 — content determines height, page scrolls naturally */
 }
-
-.panelContainer {
-  width: 480px;
-  min-width: 480px;
-  flex-shrink: 0;
-  border-left: 1px solid var(--border);
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: var(--bg-panel);
-  display: flex;
-  flex-direction: column;
-}
-
-.panelContainer::-webkit-scrollbar { width: 4px; }
-.panelContainer::-webkit-scrollbar-track { background: transparent; }
-.panelContainer::-webkit-scrollbar-thumb { background: #1e1e2a; border-radius: 2px; }

@@ -1,6 +1,9 @@
-/* Dark-theme shimmer skeleton */
+/* Skeleton shimmer — adapts to all three themes via CSS variables */
 .skeleton {
-  background: linear-gradient(90deg, #1a1a24 25%, #222230 50%, #1a1a24 75%);
+  background: linear-gradient(90deg,
+    var(--skeleton-base) 25%,
+    var(--skeleton-mid) 50%,
+    var(--skeleton-base) 75%);
   background-size: 200% 100%;
   animation: skeletonLoading 1.5s infinite;
   border-radius: 4px;
@@ -12,12 +15,17 @@
 }
 
 .skeletonBase {
-  background: #1a1a24;
+  background: var(--skeleton-base);
   border-radius: 4px;
 }
 
 .shimmer {
-  background: linear-gradient(90deg, #111118 0%, #1e1e2c 40%, #252534 50%, #1e1e2c 60%, #111118 100%);
+  background: linear-gradient(90deg,
+    var(--skeleton-surface) 0%,
+    var(--skeleton-base) 40%,
+    var(--skeleton-bright) 50%,
+    var(--skeleton-base) 60%,
+    var(--skeleton-surface) 100%);
   background-size: 200% 100%;
   animation: shimmerAnim 1.8s infinite;
   border-radius: 4px;
@@ -30,7 +38,7 @@
 
 .skeletonProgress {
   height: 4px;
-  background: #1a1a24;
+  background: var(--skeleton-base);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -44,14 +52,18 @@
 
 .skeletonText {
   height: 10px;
-  background: linear-gradient(90deg, #111118 0%, #1e1e2c 40%, #1e1e2c 60%, #111118 100%);
+  background: linear-gradient(90deg,
+    var(--skeleton-surface) 0%,
+    var(--skeleton-base) 40%,
+    var(--skeleton-base) 60%,
+    var(--skeleton-surface) 100%);
   background-size: 200% 100%;
   animation: shimmerAnim 1.8s infinite;
   border-radius: 3px;
 }
 
 .skeletonCard {
-  background: #111118;
+  background: var(--skeleton-surface);
   border-radius: 6px;
 }
 
@@ -78,7 +90,7 @@
 
 .dashboardStatCard {
   padding: 12px;
-  background: #111118;
+  background: var(--skeleton-surface);
   border-radius: 6px;
   display: flex;
   flex-direction: column;
@@ -105,7 +117,7 @@
 
 .dashboardTableHeader {
   height: 36px;
-  background: #111118;
+  background: var(--skeleton-surface);
   border-radius: 4px;
   margin-bottom: 4px;
 }
@@ -115,7 +127,7 @@
   gap: 12px;
   align-items: center;
   padding: 10px 16px;
-  background: #0f0f18;
+  background: var(--skeleton-base);
   border-radius: 4px;
 }
 
@@ -145,15 +157,15 @@
 
 .errorState {
   padding: 20px;
-  background: rgba(239, 68, 68, 0.05);
-  border: 1px solid rgba(239, 68, 68, 0.15);
+  background: var(--tier-pass-bg);
+  border: 1px solid var(--tier-pass-border);
   border-radius: 6px;
 }
 
 .errorTitle {
   font-size: 14px;
   font-weight: 600;
-  color: var(--accent-red);
+  color: var(--tier-pass);
   display: block;
   margin-bottom: 6px;
 }

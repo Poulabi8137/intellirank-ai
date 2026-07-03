@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import type { Candidate } from '../types/api';
-import type { SortField, SortDirection, TierFilter, AvailabilityFilter, ExperienceRange } from '../store/useAppStore';
+import type { SortField, SortDirection, TierFilter, AvailabilityFilter, ExperienceRange, DashboardMode } from '../store/useAppStore';
 
 export function getCandidateTier(score: number): TierFilter {
   if (score >= 85) return 'strong';
@@ -40,7 +40,9 @@ function sortCandidates(candidates: Candidate[], sortBy: SortField, direction: S
 
 export interface FilteredResult {
   candidates: Candidate[];
+  allFiltered: Candidate[];
   totalCount: number;
+  modeCount: number;
   filteredCount: number;
   totalPages: number;
   page: number;
@@ -62,11 +64,22 @@ export function useFilteredCandidates(): FilteredResult {
   const sortDirection = useAppStore(s => s.sortDirection);
   const page = useAppStore(s => s.page);
   const pageSize = useAppStore(s => s.pageSize);
+  const dashboardMode = useAppStore(s => s.dashboardMode);
 
   const sourceList = useMemo(
     () => view === 'hidden' ? hiddenGems : rankings,
     [view, rankings, hiddenGems],
   );
+
+  // Dashboard mode pre-filter applied before user filters
+  const modeSource = useMemo<Candidate[]>(() => {
+    switch (dashboardMode as DashboardMode) {
+      case 'strong-hire': return sourceList.filter(c => c.overall_score >= 88);
+      case 'immediate':   return sourceList.filter(c => c.availability === 'yes');
+      case 'risks':       return sourceList.filter(c => (c.recruitability?.blockers?.length ?? 0) > 0);
+      default:            return sourceList;
+    }
+  }, [sourceList, dashboardMode]);
 
   const hasActiveFilters = useMemo(
     () => Boolean(
@@ -81,7 +94,7 @@ export function useFilteredCandidates(): FilteredResult {
   );
 
   const filtered = useMemo(() => {
-    let result = sourceList;
+    let result = modeSource;
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
@@ -123,7 +136,7 @@ export function useFilteredCandidates(): FilteredResult {
 
     return sortCandidates(result, sortBy, sortDirection);
   }, [
-    sourceList, searchQuery, tierFilter, availabilityFilter, experienceFilter,
+    modeSource, searchQuery, tierFilter, availabilityFilter, experienceFilter,
     locationFilter, scoreRangeFilter, sortBy, sortDirection,
   ]);
 
@@ -135,7 +148,9 @@ export function useFilteredCandidates(): FilteredResult {
 
   return {
     candidates,
-    totalCount: sourceList.length,
+    allFiltered: filtered,
+    totalCount: sourceList.length,    // raw source count (pre-mode filter)
+    modeCount: modeSource.length,     // mode-filtered count (pre-user filters)
     filteredCount,
     totalPages,
     page: safePage,

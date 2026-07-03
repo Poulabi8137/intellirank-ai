@@ -1,4 +1,4 @@
-.sidebar {
+﻿.sidebar {
   width: 280px;
   min-width: 280px;
   flex-shrink: 0;
@@ -13,4 +13,5 @@
 
 .sidebar::-webkit-scrollbar { width: 4px; }
 .sidebar::-webkit-scrollbar-track { background: transparent; }
-.sidebar::-webkit-scrollbar-thumb { background: #1e1e2a; border-radius: 2px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 2px; }
+

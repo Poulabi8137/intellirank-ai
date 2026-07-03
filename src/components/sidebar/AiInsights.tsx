@@ -26,13 +26,13 @@ export function AiInsights() {
 
   const cards: InsightCard[] = [
     {
-      type: '⊕ Best Overall Match',
+      type: 'Best Match',
       color: '#7c5df7',
       candidate: insights.bestOverall,
       metaSuffix: `${insights.bestOverall.overall_score.toFixed(1)}`,
     },
     {
-      type: '⚡ Fastest to Hire',
+      type: 'Fastest to Hire',
       color: '#22c55e',
       candidate: insights.fastestHire,
       metaSuffix: insights.fastestHire.availability === 'yes'
@@ -40,7 +40,7 @@ export function AiInsights() {
         : (insights.fastestHire.availability ?? 'Available'),
     },
     {
-      type: '↑ Highest Potential',
+      type: 'Highest Potential',
       color: '#3b82f6',
       candidate: insights.highestPotential,
       metaSuffix: insights.highestPotential.potential_score != null
@@ -52,7 +52,7 @@ export function AiInsights() {
   if (insights.hiddenGem) {
     const gem = insights.hiddenGem;
     cards.push({
-      type: '◆ Hidden Gem',
+      type: 'Hidden Gem',
       color: '#f5a623',
       candidate: gem,
       metaSuffix: `Potential ${(gem.potential_score ?? 0).toFixed(0)}`,
@@ -61,11 +61,6 @@ export function AiInsights() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <span className={styles.title}>AI Insights</span>
-        <span className={styles.liveIndicator}>Live</span>
-      </div>
-
       <div className={styles.cards}>
         {cards.map(({ type, color, candidate, metaSuffix }) => {
           const rec = getAIRecommendation(candidate.overall_score);

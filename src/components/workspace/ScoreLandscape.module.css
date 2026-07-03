@@ -1,0 +1,182 @@
+.container {
+  position: relative;
+  width: 100%;
+  flex-shrink: 0;
+  background: var(--bg-landscape);
+  border-bottom: 1px solid var(--glass-border);
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ── Map title strip ──────────────────────────────────────────── */
+.mapTitle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px 0 36px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.mapTitleText {
+  font-size: 7.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  opacity: 0.45;
+  font-family: var(--font-mono);
+}
+
+.mapTitleCount {
+  font-size: 7.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  opacity: 0.7;
+  font-family: var(--font-mono);
+}
+
+.mapTitleMode {
+  color: var(--accent-text);
+  opacity: 0.85;
+}
+
+/* Subtle radial ambient behind the plot area */
+.container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 35%;
+  height: 100%;
+  background: radial-gradient(ellipse 80% 80% at 80% 50%, rgba(16,185,129,0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+/* ── Dot appear animation ─────────────────────────────────── */
+.dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dotIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes dotIn {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* ── Meta strip ─────────────────────────────────────────────── */
+.meta {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 36px;
+  pointer-events: none;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.metaLabel {
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.6;
+  font-family: var(--font-mono);
+}
+
+/* ── Legend ──────────────────────────────────────────────────── */
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 8.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.legendDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legendGem {
+  font-size: 8px;
+  color: var(--status-amber);
+  line-height: 1;
+}
+
+/* ── Tooltip ─────────────────────────────────────────────────── */
+.tooltip {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--bg-tooltip);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 8px 11px;
+  pointer-events: none;
+  z-index: var(--z-tooltip);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  max-width: 340px;
+}
+
+.tooltipDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.tooltipContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tooltipName {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+  display: block;
+}
+
+.tooltipMeta {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  display: block;
+  letter-spacing: -0.01em;
+}

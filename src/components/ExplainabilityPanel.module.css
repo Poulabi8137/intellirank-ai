@@ -1,10 +1,10 @@
-.container {
+﻿.container {
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 16px;
-  background: #0d0d0e;
-  border: 1px solid #1a1a1a;
+  background: var(--bg-surface);
+  border: 1px solid var(--bg-elevated);
   border-radius: 8px;
 }
 
@@ -22,7 +22,7 @@
 
 .skeletonHeader {
   height: 32px;
-  background: #1a1a1a;
+  background: var(--bg-elevated);
   border-radius: 4px;
   animation: shimmer 1.5s infinite;
 }
@@ -35,20 +35,20 @@
 
 .skeletonRow {
   height: 16px;
-  background: #1a1a1a;
+  background: var(--bg-elevated);
   border-radius: 4px;
   animation: shimmer 1.5s infinite;
 }
 
 .errorIcon { font-size: 24px; }
-.errorTitle { font-size: 14px; font-weight: 600; color: #ef4444; }
+.errorTitle { font-size: 14px; font-weight: 600; color: var(--tier-pass); }
 .errorMessage { font-size: 12px; color: #888; }
 .retryButton {
   padding: 6px 12px;
-  background: #1a1a1a;
+  background: var(--bg-elevated);
   border: 1px solid #333;
   border-radius: 4px;
-  color: #f0f0f0;
+  color: var(--text-primary);
   cursor: pointer;
   font-size: 12px;
 }
@@ -64,13 +64,13 @@
 .subheader { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #555; }
 
 .scoreDisplay { display: flex; align-items: baseline; gap: 4px; }
-.overallScore { font-size: 36px; font-weight: 700; color: #f0f0f0; font-variant-numeric: tabular-nums; }
+.overallScore { font-size: 36px; font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
 .scoreScale { font-size: 14px; color: #555; }
 .rankBadge {
   display: inline-flex;
   align-items: center;
   padding: 2px 8px;
-  background: #1a1a1a;
+  background: var(--bg-elevated);
   border: 1px solid #333;
   border-radius: 99px;
 }
@@ -81,7 +81,7 @@
 .dimensionsContainer { display: flex; flex-direction: column; gap: 2px; }
 
 .dimensionCard {
-  border: 1px solid #1a1a1a;
+  border: 1px solid var(--bg-elevated);
   border-radius: 6px;
   overflow: hidden;
   transition: border-color 150ms ease;
@@ -98,8 +98,8 @@
   user-select: none;
 }
 .dimensionInfo { display: flex; align-items: center; gap: 8px; }
-.dimensionName { font-size: 13px; font-weight: 500; color: #d0d0d0; }
-.dimensionScore { font-size: 13px; font-variant-numeric: tabular-nums; color: #f0f0f0; }
+.dimensionName { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
+.dimensionScore { font-size: 13px; font-variant-numeric: tabular-nums; color: var(--text-primary); }
 .dimensionWeight { font-size: 11px; color: #555; }
 .dimensionDot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 
@@ -107,13 +107,13 @@
 .contributionBarContainer {
   width: 80px;
   height: 4px;
-  background: #1a1a1a;
+  background: var(--bg-elevated);
   border-radius: 2px;
   overflow: hidden;
 }
 .contributionBar {
   height: 100%;
-  background: #4a90d9;
+  background: var(--tier-good);
   border-radius: 2px;
   transition: width 300ms ease;
 }
@@ -128,9 +128,9 @@
   color: #555;
   cursor: pointer;
 }
-.expandButtonActive { color: #f0f0f0; }
+.expandButtonActive { color: var(--text-primary); }
 
-.signalsSection { padding: 8px 12px 12px; border-top: 1px solid #1a1a1a; }
+.signalsSection { padding: 8px 12px 12px; border-top: 1px solid var(--bg-elevated); }
 .signalsTitle { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #555; margin-bottom: 6px; }
 
 .signalRow {
@@ -146,7 +146,7 @@
 .signalRowContent { display: flex; align-items: center; justify-content: space-between; }
 .signalInfo { display: flex; align-items: center; gap: 6px; }
 .signalNumber { font-size: 11px; color: #555; font-variant-numeric: tabular-nums; }
-.signalName { font-size: 12px; color: #d0d0d0; }
+.signalName { font-size: 12px; color: var(--text-secondary); }
 .signalValue { font-size: 11px; color: #888; }
 .signalMetrics { display: flex; align-items: center; gap: 8px; }
 .signalImportance { font-size: 10px; color: #555; }
@@ -166,7 +166,7 @@
 .evidenceItem {
   padding: 8px;
   background: #111;
-  border: 1px solid #1a1a1a;
+  border: 1px solid var(--bg-elevated);
   border-radius: 4px;
 }
 .evidenceItemHighlighted { border-color: #333; }
@@ -178,12 +178,12 @@
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 11px;
   line-height: 1.5;
-  color: #c0c0c0;
+  color: var(--text-secondary);
   white-space: pre-wrap;
   word-break: break-word;
   margin: 0;
 }
-.highlight { background: rgba(74, 144, 217, 0.2); color: #4a90d9; border-radius: 2px; padding: 0 2px; }
+.highlight { background: var(--tier-good-bg); color: var(--tier-good); border-radius: 2px; padding: 0 2px; }
 
 .totalSection {
   display: flex;
@@ -191,15 +191,15 @@
   gap: 4px;
   padding: 12px;
   background: #111;
-  border: 1px solid #1a1a1a;
+  border: 1px solid var(--bg-elevated);
   border-radius: 6px;
 }
 .totalRow, .penaltiesRow, .finalTotalRow { display: flex; align-items: center; justify-content: space-between; }
 .totalLabel, .penaltiesLabel { font-size: 12px; color: #888; }
-.totalValue, .penaltiesValue { font-size: 12px; color: #f0f0f0; font-variant-numeric: tabular-nums; }
-.penaltiesValue { color: #ef4444; }
-.finalTotalLabel { font-size: 13px; font-weight: 600; color: #f0f0f0; }
-.finalTotalValue { font-size: 13px; font-weight: 700; color: #f0f0f0; font-variant-numeric: tabular-nums; }
+.totalValue, .penaltiesValue { font-size: 12px; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.penaltiesValue { color: var(--tier-pass); }
+.finalTotalLabel { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.finalTotalValue { font-size: 13px; font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
 
 /* Tooltip */
 .icon {
@@ -223,15 +223,17 @@
   transform: translateX(-50%);
   width: 200px;
   padding: 8px 10px;
-  background: #1a1a1a;
+  background: var(--bg-elevated);
   border: 1px solid #333;
   border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  box-shadow: var(--shadow-md);
 }
-.tooltipContent { font-size: 12px; color: #c0c0c0; line-height: 1.4; }
+.tooltipContent { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
 
 @keyframes shimmer {
   0% { opacity: 1; }
   50% { opacity: 0.5; }
   100% { opacity: 1; }
 }
+
+

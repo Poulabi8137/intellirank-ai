@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Candidate Comparison View - Phase 8 CSS Styles (Part 1)
  * 
  * This file contains the core styling for the ComparisonView component,
@@ -87,7 +87,7 @@
 .sortSelect:focus {
   outline: none;
   border-color: var(--accent-blue);
-  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+  box-shadow: 0 0 0 2px var(--tier-good-border);
 }
 
 .closeButton {
@@ -275,8 +275,8 @@
 
 /* Rank badge */
 .rankBadge {
-  background: rgba(25, 118, 210, 0.1);
-  border: 1px solid rgba(25, 118, 210, 0.3);
+  background: var(--tier-good-bg);
+  border: 1px solid var(--tier-good-border);
   border-radius: 4px;
   padding: 4px 8px;
 }
@@ -297,19 +297,19 @@
 }
 
 .scoreExcellent {
-  color: #2b8a3e;
+  color: var(--tier-strong);
 }
 
 .scoreGood {
-  color: #1971c2;
+  color: var(--tier-good);
 }
 
 .scoreModerate {
-  color: #e67e22;
+  color: var(--status-amber);
 }
 
 .scorePoor {
-  color: #c92a2a;
+  color: var(--tier-pass);
 }
 
 /* Status/stars badges */
@@ -326,45 +326,45 @@
 }
 
 .statusExcellent {
-  background: rgba(43, 138, 62, 0.1);
-  border: 1px solid rgba(43, 138, 62, 0.3);
+  background: var(--tier-strong-bg);
+  border: 1px solid var(--tier-strong-border);
 }
 
 .statusExcellent .statusBadgeText {
-  color: #2b8a3e;
+  color: var(--tier-strong);
 }
 
 .statusGood {
-  background: rgba(25, 118, 210, 0.1);
-  border: 1px solid rgba(25, 118, 210, 0.3);
+  background: var(--tier-good-bg);
+  border: 1px solid var(--tier-good-border);
 }
 
 .statusGood .statusBadgeText {
-  color: #1971c2;
+  color: var(--tier-good);
 }
 
 .statusModerate {
-  background: rgba(235, 160, 12, 0.1);
-  border: 1px solid rgba(235, 160, 12, 0.3);
+  background: var(--tier-possible-bg);
+  border: 1px solid var(--tier-possible-border);
 }
 
 .statusModerate .statusBadgeText {
-  color: #e67e22;
+  color: var(--status-amber);
 }
 
 .statusHighRisk {
-  background: rgba(201, 42, 42, 0.1);
-  border: 1px solid rgba(201, 42, 42, 0.3);
+  background: var(--tier-pass-bg);
+  border: 1px solid var(--tier-pass-border);
 }
 
 .statusHighRisk .statusBadgeText {
-  color: #c92a2a;
+  color: var(--tier-pass);
 }
 
 /* Hidden gem badge */
 .hiddenGemBadge {
-  background: rgba(235, 160, 12, 0.1);
-  border: 1px solid rgba(235, 160, 12, 0.3);
+  background: var(--tier-possible-bg);
+  border: 1px solid var(--tier-possible-border);
   border-radius: 4px;
   padding: 6px 12px;
 }
@@ -372,7 +372,7 @@
 .hiddenGemText {
   font-size: 11px;
   font-weight: 600;
-  color: #e67e22;
+  color: var(--status-amber);
   display: block;
 }
 
@@ -410,28 +410,28 @@
 }
 
 .hasSkillBadge {
-  background: rgba(43, 138, 62, 0.1);
-  border: 1px solid rgba(43, 138, 62, 0.3);
+  background: var(--tier-strong-bg);
+  border: 1px solid var(--tier-strong-border);
   border-radius: 4px;
 }
 
 .skillCheckmark {
-  color: #2b8a3e;
+  color: var(--tier-strong);
   font-weight: 600;
   font-size: 14px;
   display: block;
 }
 
 .skillX {
-  color: #c92a2a;
+  color: var(--tier-pass);
   font-weight: 600;
   font-size: 14px;
   display: block;
 }
 
 .matchingBadge {
-  background: rgba(43, 138, 62, 0.1);
-  border: 1px solid rgba(43, 138, 62, 0.3);
+  background: var(--tier-strong-bg);
+  border: 1px solid var(--tier-strong-border);
   border-radius: 4px;
   padding: 4px 8px;
 }
@@ -439,7 +439,7 @@
 .matchingText {
   font-size: 12px;
   font-weight: 600;
-  color: #2b8a3e;
+  color: var(--tier-strong);
   display: block;
   text-align: center;
 }
@@ -453,13 +453,13 @@
 
 /* Best value highlighting */
 .bestValue {
-  background: rgba(43, 138, 62, 0.05);
-  border-left: 3px solid #2b8a3e;
+  background: var(--tier-strong-bg);
+  border-left: 3px solid var(--tier-strong);
 }
 
 .bestBadge {
-  background: rgba(43, 138, 62, 0.1);
-  border: 1px solid rgba(43, 138, 62, 0.3);
+  background: var(--tier-strong-bg);
+  border: 1px solid var(--tier-strong-border);
   border-radius: 4px;
   padding: 2px 6px;
   margin-left: 8px;
@@ -467,7 +467,7 @@
 
 .bestBadgeText {
   font-size: 10px;
-  color: #2b8a3e;
+  color: var(--tier-strong);
   font-weight: 600;
   display: block;
 }
@@ -484,8 +484,8 @@
 /* Verdict card styling */
 .verdictCard {
   padding: 32px;
-  background: linear-gradient(135deg, rgba(43, 138, 62, 0.05) 0%, rgba(25, 118, 210, 0.05) 100%);
-  border: 2px solid rgba(43, 138, 62, 0.2);
+  background: linear-gradient(135deg, var(--tier-strong-bg) 0%, var(--tier-good-bg) 100%);
+  border: 2px solid var(--tier-strong-border);
   border-radius: 8px;
   margin: 24px;
 }
@@ -512,8 +512,8 @@
 }
 
 .verdictReason::before {
-  content: "•";
-  color: #2b8a3e;
+  content: "â€¢";
+  color: var(--tier-strong);
   font-weight: 600;
   font-size: 18px;
   position: absolute;
@@ -539,7 +539,7 @@
 
 .placementItem:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 .placementTitle {
@@ -624,39 +624,39 @@
 }
 
 .reasonBadgeStrength {
-  background: rgba(43, 138, 62, 0.1);
-  border: 1px solid rgba(43, 138, 62, 0.3);
+  background: var(--tier-strong-bg);
+  border: 1px solid var(--tier-strong-border);
 }
 
 .reasonBadgeStrength .reasonBadgeText {
-  color: #2b8a3e;
+  color: var(--tier-strong);
 }
 
 .reasonBadgeWeakness {
-  background: rgba(201, 42, 42, 0.1);
-  border: 1px solid rgba(201, 42, 42, 0.3);
+  background: var(--tier-pass-bg);
+  border: 1px solid var(--tier-pass-border);
 }
 
 .reasonBadgeWeakness .reasonBadgeText {
-  color: #c92a2a;
+  color: var(--tier-pass);
 }
 
 .reasonBadgeAdvantage {
-  background: rgba(25, 118, 210, 0.1);
-  border: 1px solid rgba(25, 118, 210, 0.3);
+  background: var(--tier-good-bg);
+  border: 1px solid var(--tier-good-border);
 }
 
 .reasonBadgeAdvantage .reasonBadgeText {
-  color: #1971c2;
+  color: var(--tier-good);
 }
 
 .reasonBadgeConcern {
-  background: rgba(235, 160, 12, 0.1);
-  border: 1px solid rgba(235, 160, 12, 0.3);
+  background: var(--tier-possible-bg);
+  border: 1px solid var(--tier-possible-border);
 }
 
 .reasonBadgeConcern .reasonBadgeText {
-  color: #e67e22;
+  color: var(--status-amber);
 }
 
 .reasonText {
@@ -717,7 +717,7 @@
 }
 
 .retryButton:hover {
-  background: #c92a2a;
+  background: var(--tier-pass);
 }
 
 /* Dimension header columns for scrollable table */
@@ -791,3 +791,4 @@
   min-width: 120px;
   text-align: center;
 }
+

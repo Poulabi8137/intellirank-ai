@@ -16,18 +16,22 @@ __pycache__/
 *$py.class
 *.so
 .pytest_cache/
+.pytest_cache/README.md
 
 # Dataset (external, large files)
 redrob_dataset/
 
 # Generated outputs
 output/
-
-# Coverage reports
 coverage/
 
 # AI tooling config
 .claude/
+
+# Playwright verification artifacts (generated screenshots)
+arch_*.png
+resp_*.png
+verify_*.png
 
 # Logs
 logs
@@ -49,7 +53,7 @@ lerna-debug.log*
 *.sln
 *.sw?
 
-# Internal planning and development documentation
+# Planning and development documents (not for distribution)
 PROJECT_CONTEXT.md
 IMPLEMENTATION_PLAN.md
 GAP_ANALYSIS.md
@@ -58,9 +62,6 @@ FRONTEND_RISK_REPORT.md
 FEATURE_ENGINEERING.md
 DATASET_ANALYSIS.md
 ARCHITECTURE_REVIEW.md
-
-# Pytest cache documentation
-.pytest_cache/README.md
 
 # Temporary / local files
 *.local

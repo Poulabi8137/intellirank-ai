@@ -1,3 +1,24 @@
+/* Column grid — shared by header row and every CandidateRow */
+/* col: rank | avatar | candidate | rec-badge | score | avail | compare */
+:root {
+  --col-grid: 36px 48px 1fr 130px 68px 96px 32px;
+}
+
+/* ── Responsive column grids ──────────────────────────────── */
+/* ≤1279px: tighten fixed cols slightly */
+@media (max-width: 1279px) {
+  :root { --col-grid: 32px 42px 1fr 116px 62px 88px 28px; }
+}
+/* ≤1023px: remove availability column */
+@media (max-width: 1023px) {
+  :root { --col-grid: 30px 38px 1fr 106px 58px 26px; }
+}
+/* ≤767px: keep only essentials (candidate + rec + score) */
+@media (max-width: 767px) {
+  :root { --col-grid: 28px 1fr 96px 54px 22px; }
+}
+
+/* ── Container ────────────────────────────────────────────── */
 .container {
   display: flex;
   flex-direction: column;
@@ -11,32 +32,34 @@
   overflow-y: auto;
 }
 
+/* ── Sticky header ────────────────────────────────────────── */
 .thead {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: #0a0a0d;
-  border-bottom: 1px solid #1a1a22;
   flex-shrink: 0;
+  background: var(--bg-thead);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
+  position: relative;
+  z-index: 1;
 }
 
 .headerRow {
   display: grid;
-  grid-template-columns: 52px 1fr 88px 260px 64px 100px 72px;
+  grid-template-columns: var(--col-grid);
   align-items: center;
   height: 36px;
-  padding: 0 16px;
-  gap: 0;
+  padding: 0 20px 0 18px;
 }
 
-.hCellRank { }
-.hCellCandidate { padding-right: 12px; }
-.hCellScore { }
-.hCellDimensions { padding: 0 8px; }
-.hCellRecruit { }
-.hCellAvail { }
-.hCellActions { padding-right: 0; }
+.hCellRank      { display: flex; align-items: center; }
+.hCellAvatar    { /* empty avatar header */ }
+.hCellCandidate { display: flex; align-items: center; }
+.hCellRec       { display: flex; align-items: center; }
+.hCellScore     { display: flex; align-items: center; justify-content: center; }
+.hCellAvail     { display: flex; align-items: center; }
+.hCellActions   { }
 
+/* ── Sort header button ───────────────────────────────────── */
 .colHeader {
   display: inline-flex;
   align-items: center;
@@ -46,71 +69,66 @@
   cursor: pointer;
   padding: 0;
   font-family: inherit;
-  color: #444;
+  color: var(--text-muted);
   border-radius: 3px;
-  transition: color 0.12s;
+  transition: color var(--t-fast);
   width: 100%;
 }
 
-.colHeader:hover {
-  color: #888;
-}
+.colHeader:hover { color: var(--text-tertiary); }
 
 .colHeader:focus-visible {
-  outline: 2px solid #6e56cf;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-.colHeaderActive {
-  color: #a395e8;
-}
-
-.colHeaderActive:hover {
-  color: #c4b5fd;
-}
+.colHeaderActive { color: var(--accent-text); }
+.colHeaderActive:hover { color: var(--accent-text-strong); }
 
 .colLabel {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   line-height: 1;
 }
 
 .colLabelStatic {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #444;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
   line-height: 1;
 }
 
-.sortIcon {
+.sortArrow {
   font-size: 9px;
   line-height: 1;
-  opacity: 0.6;
+  opacity: 0.45;
 }
 
+/* ── Responsive header cell visibility ────────────────────── */
+/* Must mirror the column grid changes above */
+@media (max-width: 1023px) {
+  .hCellAvail { display: none; }
+}
+
+@media (max-width: 767px) {
+  .hCellAvatar { display: none; }
+}
+
+/* ── THE ONLY scroll container ────────────────────────────── */
 .tbody {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
   overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
-.tbody::-webkit-scrollbar {
-  width: 6px;
-}
-
-.tbody::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.tbody::-webkit-scrollbar-thumb {
-  background: #1e1e2a;
-  border-radius: 3px;
-}
-
-.tbody::-webkit-scrollbar-thumb:hover {
-  background: #2a2a38;
-}
+.tbody::-webkit-scrollbar        { width: 4px; }
+.tbody::-webkit-scrollbar-track  { background: transparent; }
+.tbody::-webkit-scrollbar-thumb  { background: var(--scrollbar-thumb); border-radius: 4px; }
+.tbody::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }

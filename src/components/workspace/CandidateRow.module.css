@@ -1,68 +1,134 @@
+/* Uses --col-grid from CandidateList.module.css */
 .row {
   display: grid;
-  grid-template-columns: 52px 1fr 88px 260px 64px 100px 72px;
+  grid-template-columns: var(--col-grid);
   align-items: center;
-  gap: 0;
-  min-height: 52px;
-  padding: 0 16px;
-  border-bottom: 1px solid #111116;
+  min-height: 68px;
+  padding: 0 20px 0 18px;
   cursor: pointer;
-  transition: background 0.1s;
+  position: relative;
   outline: none;
+  border-bottom: 1px solid var(--border-subtle);
+  transition:
+    background var(--t-fast),
+    border-color var(--t-fast),
+    transform 0.12s var(--ease-out);
+  will-change: background, transform;
 }
+
+.row:last-child { border-bottom: none; }
 
 .row:hover {
   background: var(--bg-row-hover);
+  border-color: transparent;
+  transform: translateX(1px);
 }
+
+.row:hover .compareBtn { opacity: 1; }
 
 .row:focus-visible {
-  box-shadow: inset 0 0 0 2px #6e56cf;
+  box-shadow: inset 0 0 0 2px var(--accent);
+  z-index: 1;
 }
 
+/* ── Tier accent bar — left edge ────────────────────────────── */
+.row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  background: var(--row-tier-color, transparent);
+  border-radius: 2px;
+  opacity: 0.28;
+  transition: opacity var(--t-fast), top var(--t-fast), bottom var(--t-fast), width var(--t-fast);
+}
+
+.row:hover::before {
+  opacity: 0.6;
+  top: 9px;
+  bottom: 9px;
+}
+
+/* ── Selected state ─────────────────────────────────────────── */
 .rowSelected {
-  background: rgba(110, 86, 207, 0.07);
-  border-left: 2px solid #6e56cf;
-  padding-left: 14px;
+  background: var(--bg-row-selected);
+  border-color: transparent;
 }
 
-.rowSelected:hover {
-  background: rgba(110, 86, 207, 0.1);
+.rowSelected::before {
+  opacity: 1;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
 }
 
-.rowCompared {
-  background: rgba(59, 130, 246, 0.05);
-}
+.rowSelected:hover { background: var(--bg-row-selected-hover); transform: none; }
 
-/* Rank cell */
+.rowCompared { background: var(--bg-row-compared); }
+
+/* ── Rank ───────────────────────────────────────────────────── */
 .cellRank {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 3px;
-  padding: 8px 0;
 }
 
 .rank {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11.5px;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.01em;
-  transition: color var(--transition-fast);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  line-height: 1;
 }
 
-.gemDot {
-  width: 6px;
-  height: 6px;
+.gemMarker {
+  font-size: 7px;
+  color: var(--status-amber);
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+/* ── Avatar ─────────────────────────────────────────────────── */
+.cellAvatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: #f59e0b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  background: var(--bg-avatar);
+  border: 1.5px solid;
+  color: inherit;
+  transition:
+    border-color var(--t-fast),
+    box-shadow var(--t-fast);
+  line-height: 1;
+  text-transform: uppercase;
 }
 
-/* Candidate cell */
+.rowSelected .avatar {
+  box-shadow: var(--shadow-selected);
+}
+
+/* ── Candidate identity + skill chips ───────────────────────── */
 .cellCandidate {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  padding: 8px 12px 8px 0;
+  gap: 2px;
+  padding-right: 10px;
   min-width: 0;
 }
 
@@ -74,207 +140,210 @@
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.3;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.015em;
+  display: block;
 }
 
 .meta {
-  flex-wrap: nowrap;
-  overflow: hidden;
-}
-
-.metaItem {
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--text-tertiary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex-shrink: 1;
+  display: block;
+  line-height: 1.2;
 }
 
-.metaDot {
-  font-size: 11px;
-  color: var(--text-disabled);
+/* ── Skill chips ────────────────────────────────────────────── */
+.skillChips {
+  display: flex;
+  gap: 4px;
+  margin-top: 1px;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.skillChip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  border: 1px solid;
+  white-space: nowrap;
+  line-height: 1.5;
   flex-shrink: 0;
 }
 
-/* Score cell */
+/* ── Recommendation badge ───────────────────────────────────── */
+.cellRec {
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
+}
+
+.recBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border-radius: var(--radius-pill);
+  border: 1px solid;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: box-shadow var(--t-fast);
+}
+
+.row:hover .recBadge {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.recDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Score ──────────────────────────────────────────────────── */
 .cellScore {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  padding: 8px 4px;
-}
-
-.scoreBadge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 30px;
-  border-radius: 6px;
-  font-variant-numeric: tabular-nums;
+  padding: 0 4px;
 }
 
 .scoreValue {
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
   line-height: 1;
+  font-family: var(--font-mono);
 }
 
-.tierLabel {
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  line-height: 1;
-  text-align: center;
-  max-width: 82px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Dimensions cell */
-.cellDimensions {
-  padding: 8px 8px;
-}
-
-.dimRow {
-  flex-wrap: nowrap;
-  gap: 6px !important;
-}
-
-.miniBarCell {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 42px;
-}
-
-.miniBarLabel {
+.confValue {
   font-size: 9px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-}
-
-.miniBarTrack {
-  height: 3px;
-  background: #1a1a22;
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.miniBarFill {
-  height: 100%;
-  border-radius: 2px;
-  transition: width 0.3s ease;
-}
-
-.miniBarValue {
-  font-size: 10px;
-  font-weight: 600;
-  color: #888;
-  font-variant-numeric: tabular-nums;
-}
-
-/* Recruit cell */
-.cellRecruit {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 4px;
-}
-
-.recruitValue {
-  font-size: 13px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  color: var(--text-disabled);
+  font-family: var(--font-mono);
+  letter-spacing: -0.01em;
 }
 
-/* Availability cell */
+/* ── Availability ───────────────────────────────────────────── */
 .cellAvail {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 8px 4px;
 }
 
-.availChip {
-  padding: 2px 8px;
-  border: 1px solid;
-  border-radius: 100px;
-  font-size: 10px;
+.availBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
   font-weight: 500;
   white-space: nowrap;
 }
 
-.availLabel {
-  font-size: 10px;
-  font-weight: 500;
-  line-height: 1.4;
+.availDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
-/* Actions cell */
+.availDotPulse {
+  animation: pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1;    transform: scale(1);    }
+  50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ── Compare ────────────────────────────────────────────────── */
 .cellActions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  padding: 8px 0 8px 8px;
+  justify-content: center;
 }
 
 .compareBtn {
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
-  border: 1px solid #222228;
-  background: transparent;
-  color: #555;
-  font-size: 14px;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--text-disabled);
+  font-size: 12px;
   cursor: pointer;
-  transition: all 0.12s;
+  transition:
+    opacity var(--t-fast),
+    border-color var(--t-fast),
+    color var(--t-fast),
+    background var(--t-fast);
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
   flex-shrink: 0;
+  opacity: 0;
+  font-family: inherit;
 }
 
 .compareBtn:hover:not(:disabled) {
-  border-color: #3b82f6;
-  color: #3b82f6;
-  background: rgba(59,130,246,0.1);
+  border-color: var(--info);
+  color: var(--info);
+  background: var(--info-muted);
 }
 
 .compareBtn:focus-visible {
-  outline: 2px solid #6e56cf;
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
+  opacity: 1;
 }
 
 .compareBtnActive {
-  border-color: #3b82f6;
-  color: #3b82f6;
-  background: rgba(59,130,246,0.15);
+  border-color: var(--info);
+  color: var(--info);
+  background: var(--info-muted);
+  opacity: 1;
 }
 
 .compareBtnActive:hover {
-  background: rgba(239,68,68,0.15) !important;
-  border-color: #ef4444 !important;
-  color: #ef4444 !important;
+  background: var(--danger-muted) !important;
+  border-color: var(--danger) !important;
+  color: var(--danger) !important;
 }
 
-.compareBtnDisabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
+.compareBtnDisabled { pointer-events: none; }
 
+/* ── Shared ─────────────────────────────────────────────────── */
 .noData {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-disabled);
 }
 
-.rowIndex {
-  display: none;
+/* ── Responsive: hide cells to match column grid ────────────── */
+@media (max-width: 1023px) {
+  /* Availability column removed from grid at ≤1023px */
+  .cellAvail { display: none; }
+}
+
+@media (max-width: 767px) {
+  /* Avatar removed from grid at ≤767px */
+  .cellAvatar { display: none; }
+  /* Skill chips hidden to save vertical space */
+  .skillChips { display: none; }
+  /* Meta line truncates aggressively */
+  .meta { max-width: 140px; }
 }

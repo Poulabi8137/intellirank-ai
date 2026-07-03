@@ -1,13 +1,20 @@
-import { Box, Flex, Text, Button } from '@radix-ui/themes';
+import { Flex } from '@radix-ui/themes';
 import { useAppStore } from '../../store/useAppStore';
-import type { TierFilter, AvailabilityFilter, ExperienceRange } from '../../store/useAppStore';
+import type { TierFilter, AvailabilityFilter, ExperienceRange, DashboardMode } from '../../store/useAppStore';
 import styles from './FilterBar.module.css';
 
+const MODE_META: Partial<Record<DashboardMode, { label: string; color: string }>> = {
+  'strong-hire': { label: 'Strong Hire Mode',  color: '#22c55e' },
+  'immediate':   { label: 'Immediate Joiners', color: '#10b981' },
+  'risks':       { label: 'Review Mode',        color: '#f59e0b' },
+  'analytics':   { label: 'Analytics Mode',     color: '#a99cff' },
+};
+
 const TIER_OPTIONS: { value: TierFilter; label: string; color: string }[] = [
-  { value: 'strong', label: 'Strong ≥85', color: '#22c55e' },
-  { value: 'good', label: 'Good 70–84', color: '#3b82f6' },
-  { value: 'possible', label: 'Possible 55–69', color: '#f59e0b' },
-  { value: 'weak', label: 'Weak <55', color: '#6b7280' },
+  { value: 'strong', label: 'Strong Hire', color: '#22c55e' },
+  { value: 'good', label: 'Recommended', color: '#3b82f6' },
+  { value: 'possible', label: 'Consider', color: '#f59e0b' },
+  { value: 'weak', label: 'Pass', color: '#6b7280' },
 ];
 
 const AVAIL_OPTIONS: { value: AvailabilityFilter; label: string }[] = [
@@ -62,76 +69,89 @@ export function FilterBar({ activeFilterCount }: FilterBarProps) {
   const toggleAvailabilityFilter = useAppStore(s => s.toggleAvailabilityFilter);
   const toggleExperienceFilter = useAppStore(s => s.toggleExperienceFilter);
   const clearAllFilters = useAppStore(s => s.clearAllFilters);
+  const dashboardMode = useAppStore(s => s.dashboardMode);
+  const setDashboardMode = useAppStore(s => s.setDashboardMode);
+
+  const activeMeta = dashboardMode !== 'all' ? MODE_META[dashboardMode] : null;
 
   return (
-    <Box className={styles.bar} role="group" aria-label="Candidate filters">
-      <Flex align="center" gap="3" wrap="wrap">
+    <div className={styles.bar} role="group" aria-label="Candidate filters">
+      <Flex align="center" gap="2" wrap="wrap">
 
-        <Box className={styles.group}>
-          <Text className={styles.groupLabel} as="span">Tier</Text>
-          <Flex gap="1" wrap="wrap">
-            {TIER_OPTIONS.map(opt => (
-              <FilterChip
-                key={opt.value}
-                label={opt.label}
-                active={tierFilter.includes(opt.value)}
-                color={opt.color}
-                onClick={() => toggleTierFilter(opt.value)}
-                ariaLabel={`Filter by ${opt.label} tier`}
-              />
-            ))}
-          </Flex>
-        </Box>
+        {/* ── Active dashboard mode chip ────────────────────── */}
+        {activeMeta && (
+          <div className={styles.modeChip} style={{ borderColor: activeMeta.color, color: activeMeta.color } as React.CSSProperties}>
+            <span className={styles.modeChipDot} style={{ background: activeMeta.color }} aria-hidden="true" />
+            <span className={styles.modeChipLabel}>{activeMeta.label}</span>
+            <button
+              className={styles.modeChipClear}
+              onClick={() => setDashboardMode('all')}
+              aria-label={`Clear ${activeMeta.label} workspace filter`}
+              type="button"
+              style={{ color: activeMeta.color } as React.CSSProperties}
+            >
+              ✕
+            </button>
+          </div>
+        )}
 
-        <Box className={styles.divider} aria-hidden="true" />
+        {activeMeta && <div className={styles.divider} aria-hidden="true" />}
 
-        <Box className={styles.group}>
-          <Text className={styles.groupLabel} as="span">Availability</Text>
-          <Flex gap="1" wrap="wrap">
-            {AVAIL_OPTIONS.map(opt => (
-              <FilterChip
-                key={opt.value}
-                label={opt.label}
-                active={availabilityFilter.includes(opt.value)}
-                onClick={() => toggleAvailabilityFilter(opt.value)}
-                ariaLabel={`Filter by ${opt.label} availability`}
-              />
-            ))}
-          </Flex>
-        </Box>
+        <Flex gap="1" wrap="wrap" align="center">
+          {TIER_OPTIONS.map(opt => (
+            <FilterChip
+              key={opt.value}
+              label={opt.label}
+              active={tierFilter.includes(opt.value)}
+              color={opt.color}
+              onClick={() => toggleTierFilter(opt.value)}
+              ariaLabel={`Filter by ${opt.label} tier`}
+            />
+          ))}
+        </Flex>
 
-        <Box className={styles.divider} aria-hidden="true" />
+        <div className={styles.divider} aria-hidden="true" />
 
-        <Box className={styles.group}>
-          <Text className={styles.groupLabel} as="span">Experience</Text>
-          <Flex gap="1" wrap="wrap">
-            {EXP_OPTIONS.map(opt => (
-              <FilterChip
-                key={opt.value}
-                label={opt.label}
-                active={experienceFilter.includes(opt.value)}
-                onClick={() => toggleExperienceFilter(opt.value)}
-                ariaLabel={`Filter by ${opt.label} experience`}
-              />
-            ))}
-          </Flex>
-        </Box>
+        <Flex gap="1" wrap="wrap" align="center">
+          {AVAIL_OPTIONS.map(opt => (
+            <FilterChip
+              key={opt.value}
+              label={opt.label}
+              active={availabilityFilter.includes(opt.value)}
+              onClick={() => toggleAvailabilityFilter(opt.value)}
+              ariaLabel={`Filter by ${opt.label} availability`}
+            />
+          ))}
+        </Flex>
+
+        <div className={styles.divider} aria-hidden="true" />
+
+        <Flex gap="1" wrap="wrap" align="center">
+          {EXP_OPTIONS.map(opt => (
+            <FilterChip
+              key={opt.value}
+              label={opt.label}
+              active={experienceFilter.includes(opt.value)}
+              onClick={() => toggleExperienceFilter(opt.value)}
+              ariaLabel={`Filter by ${opt.label} experience`}
+            />
+          ))}
+        </Flex>
 
         {activeFilterCount > 0 && (
-          <Button
-            variant="ghost"
-            size="1"
+          <button
             onClick={clearAllFilters}
             className={styles.clearAll}
             aria-label={`Clear all ${activeFilterCount} active filters`}
+            type="button"
           >
             Clear all
-            <Box className={styles.badge} aria-hidden="true">
+            <span className={styles.badge} aria-hidden="true">
               {activeFilterCount}
-            </Box>
-          </Button>
+            </span>
+          </button>
         )}
       </Flex>
-    </Box>
+    </div>
   );
 }

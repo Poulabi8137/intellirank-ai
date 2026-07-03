@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { Box, Text } from '@radix-ui/themes';
 import { useAppStore } from '../../store/useAppStore';
 import { CandidateRow } from './CandidateRow';
 import { EmptyState } from './EmptyState';
@@ -19,20 +18,18 @@ interface SortHeaderProps {
 
 function SortHeader({ label, field, currentField, direction, onToggle, align = 'left' }: SortHeaderProps) {
   const isActive = field === currentField;
-  const handleClick = useCallback(() => onToggle(field), [field, onToggle]);
-
   return (
     <button
       className={`${styles.colHeader} ${isActive ? styles.colHeaderActive : ''}`}
-      onClick={handleClick}
+      onClick={() => onToggle(field)}
       aria-sort={isActive ? (direction === 'asc' ? 'ascending' : 'descending') : 'none'}
       type="button"
       style={{ justifyContent: align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start' }}
     >
-      <Text className={styles.colLabel}>{label}</Text>
-      <Text className={styles.sortIcon} aria-hidden="true">
-        {!isActive ? '↕' : direction === 'asc' ? '↑' : '↓'}
-      </Text>
+      <span className={styles.colLabel}>{label}</span>
+      <span className={styles.sortArrow} aria-hidden="true">
+        {!isActive ? '⇅' : direction === 'asc' ? '↑' : '↓'}
+      </span>
     </button>
   );
 }
@@ -45,11 +42,11 @@ interface CandidateListProps {
 }
 
 export function CandidateList({ candidates, isLoading, hasActiveFilters, onClearFilters }: CandidateListProps) {
-  const selectedId = useAppStore(s => s.selectedId);
-  const compareIds = useAppStore(s => s.compareIds);
-  const sortBy = useAppStore(s => s.sortBy);
+  const selectedId    = useAppStore(s => s.selectedId);
+  const compareIds    = useAppStore(s => s.compareIds);
+  const sortBy        = useAppStore(s => s.sortBy);
   const sortDirection = useAppStore(s => s.sortDirection);
-  const toggleSort = useAppStore(s => s.toggleSort);
+  const toggleSort    = useAppStore(s => s.toggleSort);
   const setSelectedId = useAppStore(s => s.setSelectedId);
 
   const handleSelect = useCallback((id: string) => {
@@ -59,23 +56,18 @@ export function CandidateList({ candidates, isLoading, hasActiveFilters, onClear
   const handleListKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
     e.preventDefault();
-    const rows = Array.from(
-      e.currentTarget.querySelectorAll<HTMLElement>('[role="row"]')
-    );
+    const rows = Array.from(e.currentTarget.querySelectorAll<HTMLElement>('[role="row"]'));
     const active = document.activeElement as HTMLElement;
     const idx = rows.indexOf(active);
-    if (e.key === 'ArrowDown') {
-      rows[Math.min(idx + 1, rows.length - 1)]?.focus();
-    } else {
-      rows[Math.max(idx - 1, 0)]?.focus();
-    }
+    if (e.key === 'ArrowDown') rows[Math.min(idx + 1, rows.length - 1)]?.focus();
+    else rows[Math.max(idx - 1, 0)]?.focus();
   }, []);
 
   if (isLoading) {
     return (
-      <Box className={styles.loadingWrap}>
+      <div className={styles.loadingWrap}>
         <Loading.DashboardSkeleton />
-      </Box>
+      </div>
     );
   }
 
@@ -90,36 +82,32 @@ export function CandidateList({ candidates, isLoading, hasActiveFilters, onClear
   }
 
   return (
-    <Box className={styles.container}>
-      {/* Sticky header */}
-      <Box className={styles.thead} role="rowgroup" aria-label="Table headers">
-        <Box className={styles.headerRow} role="row">
-          <Box className={styles.hCellRank} role="columnheader">
+    <div className={styles.container}>
+      {/* Column headers */}
+      <div className={styles.thead} role="rowgroup" aria-label="Table headers">
+        <div className={styles.headerRow} role="row">
+          <div className={styles.hCellRank} role="columnheader">
             <SortHeader label="#" field="rank" currentField={sortBy} direction={sortDirection} onToggle={toggleSort} />
-          </Box>
-          <Box className={styles.hCellCandidate} role="columnheader">
-            <Text className={styles.colLabelStatic}>Candidate</Text>
-          </Box>
-          <Box className={styles.hCellScore} role="columnheader">
+          </div>
+          <div className={styles.hCellAvatar} role="presentation" aria-hidden="true" />
+          <div className={styles.hCellCandidate} role="columnheader">
+            <span className={styles.colLabelStatic}>Candidate</span>
+          </div>
+          <div className={styles.hCellRec} role="columnheader">
+            <span className={styles.colLabelStatic}>Recommendation</span>
+          </div>
+          <div className={styles.hCellScore} role="columnheader">
             <SortHeader label="Score" field="score" currentField={sortBy} direction={sortDirection} onToggle={toggleSort} align="center" />
-          </Box>
-          <Box className={styles.hCellDimensions} role="columnheader">
-            <Text className={styles.colLabelStatic}>Dimensions</Text>
-          </Box>
-          <Box className={styles.hCellRecruit} role="columnheader">
-            <SortHeader label="Recruit" field="recruitability" currentField={sortBy} direction={sortDirection} onToggle={toggleSort} align="center" />
-          </Box>
-          <Box className={styles.hCellAvail} role="columnheader">
-            <Text className={styles.colLabelStatic} style={{ textAlign: 'center', display: 'block' }}>Availability</Text>
-          </Box>
-          <Box className={styles.hCellActions} role="columnheader">
-            <Text className={styles.colLabelStatic} style={{ textAlign: 'right', display: 'block' }}>Compare</Text>
-          </Box>
-        </Box>
-      </Box>
+          </div>
+          <div className={styles.hCellAvail} role="columnheader">
+            <span className={styles.colLabelStatic}>Availability</span>
+          </div>
+          <div className={styles.hCellActions} role="columnheader" aria-label="Compare" />
+        </div>
+      </div>
 
-      {/* Rows */}
-      <Box
+      {/* Scroll body */}
+      <div
         className={styles.tbody}
         id="candidate-list"
         role="rowgroup"
@@ -136,7 +124,7 @@ export function CandidateList({ candidates, isLoading, hasActiveFilters, onClear
             onSelect={handleSelect}
           />
         ))}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

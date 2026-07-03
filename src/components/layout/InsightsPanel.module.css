@@ -1,0 +1,108 @@
+.panel {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+  border-bottom: 1px solid transparent;
+}
+
+.panel.open {
+  max-height: 130px;
+  border-bottom-color: var(--glass-border);
+}
+
+.inner {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--bg-toolbar);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  min-height: 108px;
+}
+
+/* ── KPI Tile ─────────────────────────────────────────────── */
+.tile {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 14px 10px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border-subtle);
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+  transition:
+    background var(--t-fast),
+    border-color var(--t-fast),
+    box-shadow var(--t-fast);
+}
+
+.tile:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border);
+  box-shadow: var(--shadow-card);
+}
+
+/* Accent bar at bottom */
+.tileAccentBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  opacity: 0.35;
+  border-radius: 0;
+  transition: opacity var(--t-fast);
+}
+
+.tile:hover .tileAccentBar {
+  opacity: 0.55;
+}
+
+/* ── Tile header (icon + label) ───────────────────────────── */
+.tileHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tileIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0.85;
+}
+
+.tileLabel {
+  font-size: 8.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ── The big number ───────────────────────────────────────── */
+.tileValue {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+}
+
+/* ── Sub-label ────────────────────────────────────────────── */
+.tileSub {
+  font-size: 10px;
+  color: var(--text-muted);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

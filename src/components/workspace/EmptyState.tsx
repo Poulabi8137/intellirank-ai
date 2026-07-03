@@ -11,24 +11,24 @@ interface EmptyStateProps {
 
 const VARIANTS = {
   'no-results': {
-    icon: '🔍',
-    title: 'No candidates match your filters',
-    description: 'Try adjusting or clearing your filters to see more results.',
+    icon: '◎',
+    title: 'No candidates match the current filters',
+    description: 'Try expanding your experience or recommendation filters — strong candidates may be just outside the current range.',
   },
   'no-data': {
-    icon: '📋',
-    title: 'No candidates loaded',
-    description: 'Rankings will appear here once the job description is processed.',
+    icon: '◇',
+    title: 'No candidates loaded yet',
+    description: 'AI rankings will appear here once the hiring pipeline is initialized.',
   },
   'error': {
-    icon: '⚠️',
-    title: 'Failed to load candidates',
-    description: 'There was a problem fetching the ranking data. Check that the backend is running.',
+    icon: '△',
+    title: 'Failed to load candidate data',
+    description: 'Unable to fetch the AI ranking data. Ensure the backend pipeline is running and retry.',
   },
   'loading-failed': {
     icon: '⚡',
     title: 'Connection error',
-    description: 'Could not reach the IntelliRank API. Showing demo data instead.',
+    description: 'Could not reach the IntelliRank API. Displaying demo data — full rankings load when the backend connects.',
   },
 };
 

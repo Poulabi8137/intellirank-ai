@@ -20,7 +20,7 @@ export function useViewport(): ViewportSize {
 function getInitialSize(): ViewportSize {
   if (typeof window === 'undefined') return 'full';
   const width = window.innerWidth;
-  if (width < 1280) return 'unsupported';
+  if (width < 768) return 'unsupported';
   if (width < 1440) return 'compact';
   return 'full';
 }
@@ -28,7 +28,7 @@ function getInitialSize(): ViewportSize {
 function getViewportSize(): ViewportSize {
   if (typeof window === 'undefined') return 'full';
   const width = window.innerWidth;
-  if (width < 1280) return 'unsupported';
+  if (width < 768) return 'unsupported';
   if (width < 1440) return 'compact';
   return 'full';
 }

@@ -1,7 +1,7 @@
 .positionContainer {
   padding: 16px;
-  background: rgba(124, 93, 247, 0.025);
-  border-top: 1px solid rgba(124, 93, 247, 0.18);
+  background: var(--accent-dim);
+  border-top: 1px solid var(--border-accent);
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 0.25s var(--ease-out), transform 0.25s var(--ease-out);
@@ -16,7 +16,7 @@
 
 .sectionHeader {
   font-size: 9px;
-  color: rgba(124, 93, 247, 0.7);
+  color: var(--accent-text);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
