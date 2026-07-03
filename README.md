@@ -1,6 +1,6 @@
 # IntelliRank AI
 
-![IntelliRank%20Logo](https://via.placeholder.com/150x150/FFC107/000000?text=IR)
+
 
 **IntelliRank AI** is a dual-system platform for explainable AI-powered candidate ranking and intelligent talent discovery. It combines a production-grade Python ranking pipeline (10 intelligence dimensions, streaming 100K-candidate processing) with a fully-interactive React frontend (40+ components, Zustand state management, real-time filtering, Excel export).
 
