@@ -24,6 +24,32 @@ IntelliRank AI addresses critical challenges in technical recruitment through a 
 
 - **React Frontend** (`src/`) — A feature-rich single-page application with 40+ components, Zustand state management (persisted + slices), TanStack Query data layer, Radix UI primitives, Framer Motion animations, and a custom dual-theme design system (Enterprise Light / Executive Dark). Features include candidate comparison, hidden gems discovery, AI recommendation engine, 7-sheet Excel export, and Playwright-verified responsive layout (768px–2560px).
 
+## Quick Summary
+
+<details open>
+<summary><strong>Short (≈50 words)</strong></summary>
+
+Explainable AI candidate ranking platform with a Python pipeline (10 intelligence dimensions, streaming 100K-candidate processing) and a React frontend (40+ components, dual-theme UI, Excel export). Designed for the Redrob AI Hackathon, producing competition-grade rankings with transparent per-candidate reasoning.
+</details>
+
+<details>
+<summary><strong>Medium (≈100 words)</strong></summary>
+
+Dual-system platform for explainable AI-powered candidate ranking. The Python backend processes 100K+ candidates through a streaming two-pass pipeline, extracting 50+ features across 10 intelligence dimensions using only numpy and pydantic — no GPU or external ML frameworks required. The React frontend provides an interactive dashboard with 40+ components, Zustand state management, TanStack Query data layer, and Radix UI primitives. Features include AI recommendation engine, candidate comparison, hidden gems discovery, and 7-sheet Excel export. Pipeline includes 2,900+ lines of pytest coverage across 7 phases.
+</details>
+
+<details>
+<summary><strong>Detailed (≈250 words)</strong></summary>
+
+Two independently runnable systems sharing a single repository:
+
+**Python Ranking Pipeline** (`intellirank/`): Streaming, competition-grade pipeline processing 100K+ candidates through two passes — first computing corpus-level normalization statistics, then loading, validating, cleaning (9 operations), and extracting features across 10 intelligence dimensions (Skill with 8 sub-features, Career with 11, Domain with 4, Experience with 5, Education with 3, Learning with 6, Behavioral with 6, Recruitability with 7, Potential with 5, Profile Quality with 5). The MCIS scoring engine computes technical fit via weighted 7-dimension aggregation (SI=0.35, CI=0.20, EI=0.15, DI=0.10, LI=0.10, EDU=0.05, PI=0.05), applies recruitability and quality gates, and filters honeypot anomalies. Explainability decomposes scores into strengths/weaknesses with natural-language reasoning. Output: competition-compliant CSV with pre-flight validation, monotonicity enforcement, and post-write re-validation.
+
+**React Frontend** (`src/`): Single-page application with 40+ components in a 3-column CSS Grid layout. Powered by Zustand (persisted with localStorage + TanStack Query), featuring sortable/filterable candidate lists, explainability panels with dimension breakdowns, recruitability analysis with blocker/signal detection, side-by-side comparison for up to 5 candidates, hidden gems discovery, AI recommendation engine (threshold-based with confidence levels), keyboard shortcuts, dual-theme design system (Enterprise Light / Executive Dark), and 7-sheet Excel export. Responsive from 768px to 2560px, verified with Playwright across 7 viewports.
+
+Architecture decisions: Zustand over Redux (simpler state shape), custom CSS over Tailwind (exact pixel spec), pure Python over ML frameworks (zero GPU dependency). Frontend operates entirely on mock data with no backend dependency.
+</details>
+
 ## Key Features
 
 ### Python Ranking Pipeline
@@ -58,89 +84,135 @@ IntelliRank AI consists of two independently runnable systems sharing a single r
 
 ### Python Ranking Pipeline
 
+```mermaid
+flowchart TD
+    subgraph Pass1["Pass 1 — Corpus Statistics"]
+        A[candidates.jsonl<br/>100K+ rows, 465MB] --> B[Single streaming pass<br/>orjson parser, O(n) memory]
+        B --> C[compute_corpus_stats]
+        C --> D[p95 normalization denominators<br/>for all 10 dimensions]
+    end
+
+    subgraph Pass2["Pass 2 — Load, Extract, Score, Rank"]
+        E[Streaming JSONL reader] --> F[Cleaning Pipeline<br/>9 operations]
+        F --> G[Feature Extraction<br/>10 dimensions, 50+ features]
+        G --> H[MCIS Scoring Engine]
+        H --> I[Ranking + Explainability<br/>top-k, monotonicity, reasoning]
+        I --> J[Submission CSV<br/>pre-flight + post-write validation]
+    end
+
+    D -.-> E
 ```
-candidates.jsonl (100K+ rows)
-      ↓
-┌─────────────────────────────┐
-│  1. Corpus Statistics       │  Single streaming pass: p95 normalization
-│     (compute_corpus_stats)  │  denominators for all 10 dimensions
-└─────────────────────────────┘
-      ↓
-┌─────────────────────────────┐
-│  2. Dataset Loading         │  Streaming JSONL reader (orjson), never
-│     (iter_candidates)       │  loads full 465MB into memory
-└─────────────────────────────┘
-      ↓
-┌─────────────────────────────┐
-│  3. Cleaning (9 operations) │  Salary normalization, date validation,
-│     (cleaning/pipeline)     │  YOE cross-validation, boilerplate detection,
-│                             │  company classification, skill preprocessing
-└─────────────────────────────┘
-      ↓
-┌─────────────────────────────────────────────────────────────┐
-│  4. Feature Extraction (10 dimensions)                       │
-│                                                              │
-│  Skill Intelligence    (SI-02..SI-09)    Career Intelligence (CI-02..CI-12)│
-│  Domain Intelligence   (DI-01..DI-04)    Experience Intel.  (EI-01..EI-05)│
-│  Education Intelligence(EDU-01..EDU-03)  Learning Intel.    (LI-01..LI-06)│
-│  Behavioral Intel.     (BI-01..BI-06)    Recruitability     (RI-01..RI-07)│
-│  Candidate Potential   (PI-01..PI-05)    Profile Quality    (PQ-01..PQ-05)│
-└─────────────────────────────────────────────────────────────┘
-      ↓
-┌─────────────────────────────┐
-│  5. MCIS Scoring            │  Technical fit (weighted 7-dim sum),
-│     (ranking/scorer)        │  recruitability gate, quality modifier,
-│                             │  honeypot anomaly gate, confidence score
-└─────────────────────────────┘
-      ↓
-┌─────────────────────────────┐
-│  6. Ranking + Explainability│  Sort, top-k, monotonicity enforcement,
-│     (ranking/ranker)        │  score decomposition, strengths/weaknesses,
-│     (ranking/explainability)│  natural-language reasoning strings
-└─────────────────────────────┘
-      ↓
-┌─────────────────────────────┐
-│  7. Submission CSV           │  Pre-flight validation, CSV write,
-│     (submission.py)         │  post-write re-validation (competition spec)
-└─────────────────────────────┘
-```
+
+**Pipeline modules:**
+
+| Stage | Module | Key Operations |
+|-------|--------|----------------|
+| 1. Corpus Statistics | `features/corpus_stats.py` | Single-pass p95 percentile computation |
+| 2. Dataset Loading | `dataset/reader.py`, `loader.py` | Streaming orjson JSONL parser, structural validation |
+| 3. Cleaning | `cleaning/pipeline.py` | Salary normalization, date validation, YOE cross-validation, text preprocessing, boilerplate detection, company classification |
+| 4. Feature Extraction | `features/extractor.py` | 10 dimension modules orchestrated in dependency-safe order |
+| 5. Scoring | `ranking/scorer.py` | MCIS-01–07: technical fit, recruitability gate, quality modifier, honeypot gate, clip |
+| 6. Ranking | `ranking/ranker.py` | Sort, top-k, monotonicity enforcement |
+| 7. Explainability | `ranking/explainability.py` | Score decomposition, strengths/weaknesses, 1-2 sentence reasoning |
+| 8. Submission | `submission.py` | Pre-flight validation, CSV write, post-write re-validation |
 
 ### React Frontend
 
+```mermaid
+flowchart LR
+    subgraph AppShell["AppShell (3-column CSS Grid)"]
+        direction LR
+        SB[Sidebar<br/>280px] --> MC[MainContent<br/>1fr]
+        MC --> DP[DetailPanel<br/>480px overlay]
+    end
+
+    subgraph SidebarContent["Sidebar"]
+        SDC[ScoreDistributionChart]
+        KM[KeyMetrics]
+        CB[CandidateBreakdown]
+        SP[SelectedPosition]
+        AI[AiInsights]
+    end
+
+    subgraph MainContent["MainContent"]
+        HB[HiringBrief]
+        ACC[AICommandCenter]
+        SL[ScoreLandscape<br/>SVG-based]
+        PC[PriorityCandidates]
+        CL[CandidateList<br/>filter/sort/paginate]
+        EB[ExportButton]
+    end
+
+    subgraph DetailPanel["DetailPanel"]
+        SO[ScoreOverview<br/>gauge + verdict]
+        EP[Explainability<br/>dimension breakdown]
+        RP[Recruitability<br/>blockers + signals]
+        DS[Decision Support<br/>strengths + guidance]
+    end
+
+    SB --- SidebarContent
+    MC --- MainContent
+    DP --- DetailPanel
 ```
-┌─────────────────────────────────────────────────────┐
-│  <App>                                               │
-│  ┌───────────────────────────────────────────────┐  │
-│  │  <AppShell> (3-column CSS Grid)               │  │
-│  │  ┌──────────┬──────────────────┬────────────┐ │  │
-│  │  │ Sidebar  │  MainContent     │ DetailPanel│ │  │
-│  │  │ (280px)  │  (1fr)           │ (480px)    │ │  │
-│  │  │          │                  │ (overlay)  │ │  │
-│  │  │ Score    │ CandidateWorkspace│ Explain-  │ │  │
-│  │  │ Distri-  │ ├─ HiringBrief   │ ability   │ │  │
-│  │  │ bution   │ ├─ AICommandCenter│ Recruit-  │ │  │
-│  │  │ Key      │ ├─ ScoreLandscape│ ability   │ │  │
-│  │  │ Metrics  │ ├─ Priority      │ Decision  │ │  │
-│  │  │ AI       │ ├─ CandidateList │ Support   │ │  │
-│  │  │ Insights │ │  (filter/sort/ │           │ │  │
-│  │  │          │ │   paginate)   │           │ │  │
-│  │  └──────────┴──────────────────┴────────────┘ │  │
-│  └───────────────────────────────────────────────┘  │
-│                                                     │
-│  Layers: Toast, KeyboardShortcuts, UXAudit          │
-└─────────────────────────────────────────────────────┘
-```
+
+**Global layers:** Toast notifications, KeyboardShortcuts, UXAudit overlay
 
 ### Architecture Decisions
 
 | Decision | Rationale |
 |----------|-----------|
 | **Dual-system monorepo** | Python pipeline processes 100K candidates offline; React FE renders results from mock data with no backend dependency |
-| **Zustand over Redux** | The state shape (~50 fields) is well-served by Zustand's simplicity; persist middleware handles localStorage sync |
-| **TanStack Query** | Provides caching, deduplication, loading/error states for the single `/api/rankings` call |
-| **Custom CSS over Tailwind** | The design spec specifies exact pixel values (48px rows, 56px header, 280px sidebar) — custom CSS avoids arbitrary-value class bloat |
-| **No external ML dependencies** | Pure numpy/pydantic feature engineering — no GPU, TensorFlow, or PyTorch needed for the pipeline |
-| **Streaming two-pass design** | Corpus statistics computed in one pass (O(n) memory); feature extraction/ranking in second pass — handles 100K+ candidates on commodity hardware |
+| **Zustand over Redux** | State shape (~50 fields) well-served by Zustand's simplicity; persist middleware handles localStorage sync |
+| **TanStack Query** | Caching, deduplication, loading/error states for the single `/api/rankings` call |
+| **Custom CSS over Tailwind** | Design spec specifies exact pixel values (48px rows, 56px header, 280px sidebar) — custom CSS avoids arbitrary-value class bloat |
+| **No external ML dependencies** | Pure numpy/pydantic feature engineering — no GPU, TensorFlow, or PyTorch needed |
+| **Streaming two-pass design** | Corpus stats in one pass (O(n) memory); extract/score/rank in second pass — handles 100K+ candidates on commodity hardware |
+| **CSS Grid over Flexbox** | Three-column layout (sidebar + content + overlay) maps naturally to `grid-template-columns: 280px 1fr` with panel as absolute overlay |
+| **Pydantic v2 for data models** | 18 validated models with zero-cost serialization; strict mode for competition-grade data integrity |
+
+## Engineering Challenges & Tradeoffs
+
+### Data: Processing 100K+ Candidates Without Loading Into Memory
+
+The Redrob dataset is a 465MB JSONL file with 100K+ candidate profiles. Loading it entirely into memory would consume ~2GB+ after Pydantic parsing.
+
+**Solution:** Two-pass streaming architecture. Pass 1 reads raw JSONL with orjson (zero-copy parsing) to compute corpus-level normalization statistics — O(n) memory regardless of file size. Pass 2 streams again through the same file, parse → clean → extract → score → rank in a single pipeline, yielding only the top-100 results. The `iter_candidates()` generator never holds more than one candidate in memory at a time.
+
+### Feature Engineering: 10 Dimensions Without External ML
+
+Most recruitment AI systems rely on embedding models (BERT, Sentence Transformers) for semantic matching. These require GPU infrastructure and introduce opacity in scoring.
+
+**Solution:** Pure feature-engineered scoring using hand-crafted signals across 10 dimensions (50+ individual features). Skill Intelligence uses a 24K-line taxonomy of Tier-1/Tier-2/Tier-3 skills with weighted term scanning. Career Intelligence detects consulting vs product experience, AI description specificity, and production deployment evidence through regex patterns and company name normalization — no neural network required. This makes every score fully deterministic and explainable.
+
+### Explainability: MCIS Scoring With Honesty Rules
+
+Generating natural-language reasoning that doesn't hallucinate is a well-known AI safety problem.
+
+**Solution:** Template-based reasoning (MCIS-06) with strict honesty rules: only emit signals actually detected during feature extraction. Tier-1 skills are pulled from a detected set, not generated. Notice periods, inactivity days, and anomaly scores are mandatory disclosures. Four rotating opening templates prevent identical phrasing across candidates while keeping every word grounded in extracted data.
+
+### State Management: Zustand vs Redux vs Context
+
+The app has ~50 state fields spanning rankings, hidden gems, distribution, selection, comparison, filters, sort, pagination, view modes, and UI state.
+
+**Why Zustand:** Context would cause unnecessary re-renders across the 40+ component tree. Redux would require ~3× boilerplate for a state shape that's fundamentally flat. Zustand's `create` + `persist` middleware delivers typed state with localStorage sync in ~200 lines. Selector hooks (`useSelectedCandidate`, `useDistribution`) keep re-renders scoped to components that actually consume each slice.
+
+### CSS: Custom Design System vs Tailwind
+
+The UX spec defined exact pixel values: 48px candidate rows, 56px header, 280px sidebar, 480px panel width, 3-column grid at ≥1440px with sidebar collapsing to 48px icon-only at 1280px.
+
+**Why not Tailwind:** Mapping these exact values to Tailwind would require arbitrary-value classes (`w-[280px]`, `h-[56px]`) — essentially inline styles with extra syntax. A custom CSS design system (~2000 lines in `index.css`) with CSS custom properties (`--sidebar-width: 280px`, `--header-height: 56px`) makes the spec values a single point of change and keeps component CSS focused on layout, not pixel math.
+
+### Export: 7-Sheet Excel Without Server Infrastructure
+
+The spec required structured data export with styled cells, merged headers, and banded rows — typically a server-side job.
+
+**Solution:** Client-side export using `xlsx-js-style`. The `export.ts` file (~1500 lines) programmatically builds a 7-sheet workbook using the same mock data the UI renders. No API calls, no server processing, no file size limits. Each sheet (Rankings, Strong Hires, Hidden Gems, Comparison, Analytics, Feature Analysis, Insights) applies its own column widths, header styling, and conditional formatting.
+
+### Testing: 7-Phase Pytest Suite Without Mocking
+
+The pipeline has no external dependencies (databases, APIs, ML models) — every test runs against pure Python data transformations.
+
+**Strategy:** Each of the 7 test phases builds on the previous phase's outputs. Phase 1 tests foundation utilities (math, text, date). Phase 2 validates the dataset reader against known-format fixtures. Phase 3 tests cleaning transformations with edge cases (missing dates, malformed salaries). Phases 4–5 test feature extraction and scoring with sample candidates. Phase 6 runs the full pipeline end-to-end. Phase 7 validates the submission CSV against official competition rules — no mocking required at any layer.
 
 ## Technology Stack
 
@@ -494,32 +566,6 @@ The frontend includes several accessibility-focused features:
 - **Testing**: pytest for Python, Playwright for frontend E2E verification
 - **Feature additions**: Add corresponding tests and update feature documentation
 
-## Project Summary
-
-<details>
-<summary><strong>Short Summary (≈50 words)</strong></summary>
-
-IntelliRank AI is an explainable AI candidate ranking platform with a Python pipeline (10 intelligence dimensions, streaming 100K-candidate processing) and a React frontend (40+ components, dual-theme UI, Excel export). Designed for the Redrob AI Hackathon, it produces competition-grade rankings with transparent per-candidate reasoning.
-</details>
-
-<details>
-<summary><strong>Medium Summary (≈100 words)</strong></summary>
-
-IntelliRank AI is a dual-system platform for explainable AI-powered candidate ranking. The Python backend processes 100K+ candidates through a streaming two-pass pipeline, extracting 50+ features across 10 intelligence dimensions (Skill, Career, Domain, Experience, Education, Learning, Behavioral, Recruitability, Potential, Profile Quality) using only numpy and pydantic — no GPU or external ML frameworks required. The React frontend provides an interactive dashboard with 40+ components, Zustand state management, TanStack Query data layer, and Radix UI primitives. Features include AI recommendation engine, candidate comparison, hidden gems discovery, and 7-sheet Excel export. The pipeline includes 2,900+ lines of pytest coverage across 7 phases.
-</details>
-
-<details>
-<summary><strong>Detailed Summary (≈250 words)</strong></summary>
-
-IntelliRank AI is a production-grade, explainable AI candidate ranking platform built for the Redrob AI Hackathon. It comprises two independently runnable systems sharing a single repository.
-
-**Python Ranking Pipeline** (`intellirank/`): A streaming, competition-grade pipeline that processes 100K+ candidates through two passes — the first computes corpus-level normalization statistics, the second loads, validates, cleans (9 operations), and extracts features across 10 intelligence dimensions (Skill Intelligence with 8 sub-features, Career Intelligence with 11, Domain Intelligence with 4, Experience Intelligence with 5, Education Intelligence with 3, Learning Intelligence with 6, Behavioral Intelligence with 6, Recruitability with 7, Candidate Potential with 5, and Profile Quality with 5). The MCIS scoring engine computes technical fit via weighted 7-dimension aggregation, applies recruitability and quality gates, and filters honeypot anomalies. The explainability engine decomposes scores into strengths and weaknesses with natural-language reasoning. Output is a competition-compliant CSV with pre-flight validation, monotonicity enforcement, and post-write re-validation. Coverage: 2,900+ pytest lines across 7 phases.
-
-**React Frontend** (`src/`): A single-page application with 40+ components organized in a 3-column CSS Grid layout (sidebar, main content, detail panel). Powered by Zustand (persisted with localStorage + TanStack Query for data fetching), the frontend features sortable/filterable candidate lists, explainability panels with dimension breakdowns, recruitability analysis with blocker/signal detection, side-by-side comparison for up to 5 candidates, hidden gems discovery, AI recommendation engine (threshold-based with confidence levels), keyboard shortcuts, dual-theme design system (Enterprise Light / Executive Dark), and 7-sheet Excel export via xlsx-js-style. Responsive from 768px to 2560px, verified with Playwright across 7 viewports.
-
-Architecture decisions included Zustand over Redux (simpler state shape), custom CSS over Tailwind (exact pixel spec), and pure Python over ML frameworks (zero GPU dependency). The frontend operates entirely on mock data with no backend dependency.
-</details>
-
 ## License
 
 MIT License — see [LICENSE](LICENSE).
@@ -531,35 +577,18 @@ MIT License — see [LICENSE](LICENSE).
 [![GitHub](https://img.shields.io/badge/GitHub-poulabighosh-181717?logo=github&logoColor=white)](https://github.com/poulabighosh)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-poulabighosh-0077B5?logo=linkedin&logoColor=white)](https://linkedin.com/in/poulabighosh)
 
-**Software Engineer** · **AI/ML Engineer** · **Full-Stack Developer**
+**Software Engineer · AI/ML Engineer · Full-Stack Developer**
 
 Email: [poulabighosh44@gmail.com](mailto:poulabighosh44@gmail.com)
 
-### Why IntelliRank AI
-
-Passionate about transforming technical recruitment through AI and data science. Dedicated to building intelligent, explainable AI systems that help organizations discover top talent through transparent, data-driven decision making.
+IntelliRank AI was built as a Redrob AI Hackathon submission to demonstrate production-quality engineering across the full stack — from streaming data pipelines and deterministic feature engineering to interactive React UIs with real-time filtering and complex state management.
 
 ---
 
 ## Acknowledgements
 
-### Core Technologies
+**Core Technologies** — React 19, TypeScript 6, Vite 8, Zustand, TanStack Query, Radix UI, Python 3.12, Pydantic v2, NumPy, pytest, Playwright
 
-- **React 19**, **TypeScript 6**, **Vite 8** — Frontend foundation
-- **Zustand**, **TanStack Query**, **Radix UI** — State management, data layer, primitives
-- **Python 3.12**, **Pydantic v2**, **NumPy** — Pipeline core
-- **pytest**, **Playwright** — Testing frameworks
+**Build & Tooling** — Oxlint, Prettier, Vite
 
-### Build & Tooling
-
-- **Oxlint** — Type-aware linting
-- **Prettier** — Code formatting
-- **Vite** — Build tool
-
-### Design & Inspiration
-
-- Redrob AI Hackathon — Competition dataset and problem formulation
-- Radix UI — Accessible component primitives and themes
-- shadcn/ui, Vercel, Supabase — Design inspiration for UX patterns
-
-<tool_call>12</tool_call>
+**Design & Inspiration** — Redrob AI Hackathon (competition dataset and problem formulation), Radix UI (accessible primitives), shadcn/ui, Vercel, Supabase (UX pattern inspiration)
