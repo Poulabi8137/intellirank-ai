@@ -85,22 +85,22 @@ IntelliRank AI consists of two independently runnable systems sharing a single r
 ### Python Ranking Pipeline
 
 ```mermaid
-flowchart TD
-    subgraph Pass1["Pass 1 — Corpus Statistics"]
-        A[candidates.jsonl<br/>100K+ rows, 465MB] --> B[Single streaming pass<br/>orjson parser, O(n) memory]
-        B --> C[compute_corpus_stats]
-        C --> D[p95 normalization denominators<br/>for all 10 dimensions]
+graph TD
+    subgraph "Pass 1 - Corpus Statistics"
+        A[Candidates JSONL] --> B[Streaming Pass]
+        B --> C[Corpus Stats]
+        C --> D[p95 Denominators]
     end
 
-    subgraph Pass2["Pass 2 — Load, Extract, Score, Rank"]
-        E[Streaming JSONL reader] --> F[Cleaning Pipeline<br/>9 operations]
-        F --> G[Feature Extraction<br/>10 dimensions, 50+ features]
-        G --> H[MCIS Scoring Engine]
-        H --> I[Ranking + Explainability<br/>top-k, monotonicity, reasoning]
-        I --> J[Submission CSV<br/>pre-flight + post-write validation]
+    subgraph "Pass 2 - Load Extract Score Rank"
+        E[Dataset Loader] --> F[Cleaning]
+        F --> G[Feature Extraction]
+        G --> H[MCIS Scoring]
+        H --> I[Rank and Explain]
+        I --> J[Submission CSV]
     end
 
-    D -.-> E
+    D --> E
 ```
 
 **Pipeline modules:**
@@ -119,40 +119,39 @@ flowchart TD
 ### React Frontend
 
 ```mermaid
-flowchart LR
-    subgraph AppShell["AppShell (3-column CSS Grid)"]
-        direction LR
-        SB[Sidebar<br/>280px] --> MC[MainContent<br/>1fr]
-        MC --> DP[DetailPanel<br/>480px overlay]
+graph LR
+    subgraph "AppShell 3 Column Grid"
+        SB[Sidebar 280px]
+        MC[Main Content]
+        DP[Detail Panel 480px]
     end
 
-    subgraph SidebarContent["Sidebar"]
-        SDC[ScoreDistributionChart]
-        KM[KeyMetrics]
-        CB[CandidateBreakdown]
-        SP[SelectedPosition]
-        AI[AiInsights]
+    subgraph "Sidebar"
+        SDC[Score Chart]
+        KM[Key Metrics]
+        CB[Breakdown]
+        AII[AI Insights]
     end
 
-    subgraph MainContent["MainContent"]
-        HB[HiringBrief]
-        ACC[AICommandCenter]
-        SL[ScoreLandscape<br/>SVG-based]
-        PC[PriorityCandidates]
-        CL[CandidateList<br/>filter/sort/paginate]
-        EB[ExportButton]
+    subgraph "Main Content"
+        HB[Hiring Brief]
+        ACC[AI Command Center]
+        SL[Score Landscape]
+        PC[Priority Candidates]
+        CL[Candidate List]
+        EB[Export Button]
     end
 
-    subgraph DetailPanel["DetailPanel"]
-        SO[ScoreOverview<br/>gauge + verdict]
-        EP[Explainability<br/>dimension breakdown]
-        RP[Recruitability<br/>blockers + signals]
-        DS[Decision Support<br/>strengths + guidance]
+    subgraph "Detail Panel"
+        SO[Score Overview]
+        EP[Explainability]
+        RP[Recruitability]
+        DS[Decision Support]
     end
 
-    SB --- SidebarContent
-    MC --- MainContent
-    DP --- DetailPanel
+    SB --> SDC
+    MC --> HB
+    DP --> SO
 ```
 
 **Global layers:** Toast notifications, KeyboardShortcuts, UXAudit overlay
